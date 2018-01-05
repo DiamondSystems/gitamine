@@ -12,10 +12,12 @@ use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
 use Gitamine\Infrastructure\GitamineConfig;
 use Hamcrest\Matchers;
-use Mockery;
 use Mockery\MockInterface;
+use Mockery;
 
 /**
+ *  @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ *
  * Class GitamineMock
  *
  * @package Gitamine\Test
@@ -137,13 +139,47 @@ class GitamineMock
      * @param string $version
      * @param string $return
      */
-    public function shouldGetPluginName(string $name, string $version, string $return = ''): void
+    public function shouldInstallGithubPlugin(string $name, string $version, string $return = ''): void
     {
         $thePlugin = Matchers::equalTo(new GithubPlugin(
             new GithubPluginName($name),
             new GithubPluginVersion($version)
         ));
-        $this->gitamine->shouldReceive('getGithubPluginName')
+        $this->gitamine->shouldReceive('installGithubPlugin')
+                       ->once()
+                       ->with($thePlugin)
+                       ->andReturn($return);
+    }
+
+    /**
+     * @param string $plugin
+     * @param string $returnName
+     * @param string $returnVersion
+     */
+    public function shouldGetGithubPluginForPlugin(string $plugin, string $returnName, string $returnVersion): void
+    {
+        $return = new GithubPlugin(
+            new GithubPluginName($returnName),
+            new GithubPluginVersion($returnVersion)
+        );
+        $this->gitamine->shouldReceive('getGithubPluginForPlugin')
+                       ->once()
+                       ->with(Matchers::equalTo(new Plugin($plugin)))
+                       ->andReturn($return);
+    }
+
+    /**
+     * @param string $plugin
+     * @param string $version
+     * @param bool   $return
+     */
+    public function shouldPluginBeInstalled(string $plugin, string $version, bool $return): void
+    {
+        $thePlugin = Matchers::equalTo(new GithubPlugin(
+            new GithubPluginName($plugin),
+            new GithubPluginVersion($version)
+        ));
+        $this->gitamine->shouldReceive('isPluginInstalled')
                        ->once()
                        ->with($thePlugin)
                        ->andReturn($return);

@@ -7,14 +7,19 @@ use Gitamine\Domain\Directory;
 use Gitamine\Domain\Event;
 use Gitamine\Domain\File;
 use Gitamine\Domain\GithubPlugin;
+use Gitamine\Domain\GithubPluginName;
+use Gitamine\Domain\GithubPluginVersion;
 use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
 use Gitamine\Exception\GithubProjectDoesNotExist;
+use Gitamine\Exception\InvalidDirException;
 use Gitamine\Exception\MissingConfigurationFileException;
 use Gitamine\Infrastructure\GitamineConfig;
-use Symfony\Component\Yaml\Yaml;
 
 /**
+ * TODO
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ *
  * Class YamlGitamineConfig
  *
  * @package App\GitamineConfig
@@ -45,9 +50,17 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getConfiguration(Directory $directory): array
     {
-        $this->config = $this->config ?? Yaml::parseFile($this->getConfigurationFile($directory)->file());
+        if (!$this->config) {
+            $config = \Symfony\Component\Yaml\Yaml::parseFile($this->getConfigurationFile($directory)->file());
 
-        return $this->config['gitamine'];
+            $this->config              = $config['gitamine'];
+            $this->config['_requires'] = $this->config['_requires'] ?? [];
+            foreach (Event::VALID_EVENTS as $event) {
+                $this->config[$event] = $this->config[$event] ?? [];
+            }
+        }
+
+        return $this->config;
     }
 
     /**
@@ -72,6 +85,7 @@ class YamlGitamineConfig implements GitamineConfig
         // passthru
         exec($this->getPluginExecutableFile($plugin)->file() . $params . ' 2>&1', $out, $status);
         $output = implode("\n", $out);
+
         return $status === 0;
     }
 
@@ -104,8 +118,8 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getOptionsForPlugin(Directory $directory, Plugin $plugin, Event $event): PluginOptions
     {
-        $config            = $this->getConfiguration($directory);
-        $config['plugins'] = $config['plugins'] ?? [];
+        $config                  = $this->getConfiguration($directory);
+        $config[$event->event()] = $config[$event->event()] ?? [];
 
         return new PluginOptions($config[$event->event()][$plugin->name()] ?? []);
     }
@@ -169,7 +183,7 @@ class YamlGitamineConfig implements GitamineConfig
      * @throws GithubProjectDoesNotExist
      * @throws MissingConfigurationFileException
      */
-    public function getGithubPluginName(GithubPlugin $plugin): string
+    public function installGithubPlugin(GithubPlugin $plugin): string
     {
         $curl = curl_init(
             sprintf(
@@ -187,20 +201,17 @@ class YamlGitamineConfig implements GitamineConfig
             throw new GithubProjectDoesNotExist($plugin->name()->name());
         }
 
-        $json = json_decode($response);
-
         if (!$response) {
             throw new MissingConfigurationFileException();
         }
 
-        $dir  = $this->getGitamineFolder()->name();
-        $name = $json->name;
+        $dir = $this->getGitamineFolder()->name();
 
         exec(
             sprintf(
                 'rm -Rf ~/%s/plugins/%s > /dev/null',
                 $dir,
-                $name
+                $plugin->name()->name()
             )
         );
 
@@ -209,7 +220,7 @@ class YamlGitamineConfig implements GitamineConfig
                 'git clone git@github.com:%s.git ~/%s/plugins/%s',
                 $plugin->name()->name(),
                 $dir,
-                $name
+                $plugin->name()->name()
             )
         );
 
@@ -217,7 +228,7 @@ class YamlGitamineConfig implements GitamineConfig
             sprintf(
                 'cd %s/plugins/%s 2> /dev/null; git checkout %s 2> /dev/null',
                 $dir,
-                $name,
+                $plugin->name()->name(),
                 $plugin->version()->version()
             )
         );
@@ -225,5 +236,43 @@ class YamlGitamineConfig implements GitamineConfig
         // DO NOTHING BY NOW
 
         return '.---.';
+    }
+
+    /**
+     * @param Plugin $plugin
+     *
+     * @return GithubPlugin
+     */
+    public function getGithubPluginForPlugin(Plugin $plugin): GithubPlugin
+    {
+        /** @var array $requirements */
+        $requirements = $this->getConfiguration($this->getProjectFolder())['_requires'];
+
+        foreach ($requirements as $requirement => $alias) {
+            if ($alias === $plugin->name()) {
+                return new GithubPlugin(
+                    new GithubPluginName($requirement),
+                    new GithubPluginVersion('master')
+                );
+            }
+        }
+
+        throw new \RuntimeException('Plugin is not listed as alias on _requires.');
+    }
+
+    /**
+     * @param GithubPlugin $plugin
+     *
+     * @return bool
+     */
+    public function isPluginInstalled(GithubPlugin $plugin): bool
+    {
+        try {
+            $this->getGitamineFolder()->cd('plugins')->cd($plugin->name()->name());
+        } catch (InvalidDirException $e) {
+            return false;
+        }
+
+        return true;
     }
 }

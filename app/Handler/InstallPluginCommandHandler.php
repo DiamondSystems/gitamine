@@ -44,11 +44,10 @@ class InstallPluginCommandHandler
      */
     public function __invoke(InstallPluginCommand $command)
     {
-        $dir    = $this->gitamine->getGitamineFolder();
         $plugin = new GithubPlugin(
             new GithubPluginName($command->name()),
             new GithubPluginVersion($command->version())
         );
-        $this->gitamine->getGithubPluginName($plugin);
+        $this->gitamine->installGithubPlugin($plugin);
     }
 }

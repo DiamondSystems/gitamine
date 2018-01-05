@@ -83,5 +83,24 @@ interface GitamineConfig
      */
     public function getProjectFolder(): Directory;
 
-    public function getGithubPluginName(GithubPlugin $plugin): string;
+    /**
+     * @param GithubPlugin $plugin
+     *
+     * @return string
+     */
+    public function installGithubPlugin(GithubPlugin $plugin): string;
+
+    /**
+     * @param Plugin $plugin
+     *
+     * @return GithubPlugin
+     */
+    public function getGithubPluginForPlugin(Plugin $plugin): GithubPlugin;
+
+    /**
+     * @param GithubPlugin $plugin
+     *
+     * @return bool
+     */
+    public function isPluginInstalled(GithubPlugin $plugin): bool;
 }

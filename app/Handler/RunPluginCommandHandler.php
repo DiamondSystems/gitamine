@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace Gitamine\Handler;
 
 use App\Prooph\SynchronousQueryBus;
+use Gitamine\Command\InstallPluginCommand;
 use Gitamine\Command\RunPluginCommand;
 use Gitamine\Domain\Directory;
 use Gitamine\Domain\Event;
+use Gitamine\Domain\GithubPlugin;
 use Gitamine\Domain\Plugin;
 use Gitamine\Exception\PluginExecutionFailedException;
 use Gitamine\Infrastructure\GitamineConfig;
@@ -56,42 +58,38 @@ class RunPluginCommandHandler
      */
     public function __invoke(RunPluginCommand $query)
     {
-        $dir     = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
-        $plugin  = new Plugin($query->plugin());
-        $event   = new Event($query->event());
+        $dir    = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
+        $plugin = new Plugin($query->plugin());
+        $event  = new Event($query->event());
 
         $options = $this->gitamine->getOptionsForPlugin($dir, $plugin, $event);
         $result  = '';
 
         if ($options->enabled()) {
+
+            /** @var GithubPlugin $githubPlugin */
+            $githubPlugin = $this->gitamine->getGithubPluginForPlugin($plugin);
+
+            if (!$this->gitamine->isPluginInstalled($githubPlugin)) {
+                $this->bus->dispatch(new InstallPluginCommand(
+                    $githubPlugin->name()->name(),
+                    $githubPlugin->version()->version()
+                ));
+            }
+
+            // Running part
             $this->output->print(str_pad("<info>Running</info> {$plugin->name()}:", 36));
-            $row = $this->output->getCurrentLine();
-            $this->output->println('<pending> ◷</pending>');
 
             $success = $this->gitamine->runPlugin($plugin, $event, $options, $result);
-            //$nextRow = $this->output->getCurrentLine();
-            //$nextCol = $this->output->getCurrentColumn();
 
             if (!$success) {
-                $this->output->moveTo($row, 0);
-
-                $this->output->println(
-                    str_pad("<info>Running</info> {$plugin->name()}:", 36) .
-                    "\t<fail>✘</fail>"
-                );
-
+                $this->output->println("\t<fail>✘</fail>");
                 $this->output->println($result);
-                //$this->output->moveTo($nextRow, $nextCol);
 
                 throw new PluginExecutionFailedException('Failed', 2);
             }
 
-            $this->output->moveTo($row, 0);
-
-            $this->output->println(
-                str_pad("<info>Running</info> {$plugin->name()}:", 36) .
-                "\t<success>✔</success>"
-            );
+            $this->output->println("\t<success>✔</success>");
         }
     }
 }

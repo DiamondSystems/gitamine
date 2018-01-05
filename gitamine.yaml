@@ -20,3 +20,14 @@ gitamine:
       bin: bin/phpunit
       min-coverage: 100
       #TODO configuration-file: phpunit.unit.xml
+
+  _requires:
+    # plugin: alias
+    git4min3/gitamine-shellcheck: shellcheck
+    git4min3/gitamine-composer: composer
+    git4min3/gitamine-yaml-lint: yaml-lint
+    git4min3/gitamine-phpunit: phpunit
+    git4min3/gitamine-phpcs: phpcs
+    git4min3/gitamine-phpmd: phpmd
+    git4min3/gitamine-codeception: codeception
+

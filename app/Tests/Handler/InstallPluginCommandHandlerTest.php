@@ -18,12 +18,10 @@ class InstallPluginCommandHandlerTest extends TestCase
 {
     public function testShouldInstallPlugin()
     {
-        $dir = '/';
         $gitamine = GitamineMock::create();
         $output   = OutputMock::create();
 
-        $gitamine->shouldGetGitamineFolder($dir);
-        $gitamine->shouldGetPluginName('test/test', 'master');
+        $gitamine->shouldInstallGithubPlugin('test/test', 'master');
 
         $handler = new InstallPluginCommandHandler($gitamine->gitamine(), $output->output());
         $handler(new InstallPluginCommand('test/test', 'master'));
