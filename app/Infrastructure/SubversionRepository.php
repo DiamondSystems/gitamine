@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gitamine\Infrastructure;
 
 use Gitamine\Domain\Directory;
+use Gitamine\Domain\File;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
 
 /**
@@ -55,4 +56,24 @@ interface SubversionRepository
      * @throws InvalidSubversionDirectoryException
      */
     public function getDeletedFiles(Directory $dir): array;
+
+    /**
+     * @param Directory $dir
+     *
+     * @return array
+     *
+     * @throws InvalidSubversionDirectoryException
+     */
+    public function getBranchName(Directory $dir): array;
+
+    /**
+     * @param Directory $dir
+     * @param string    $source
+     * @param string    $destiny
+     *
+     * @return File[]
+     *
+     * @throws InvalidSubversionDirectoryException
+     */
+    public function getFilesModifiedOnBranch(Directory $dir, string $source, string $destiny): array;
 }
