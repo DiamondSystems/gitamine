@@ -45,9 +45,13 @@ class InitCommand extends ContainerAwareCommand
         \exec('mkdir ~/.gitamine &> /dev/null');
         \exec('mkdir ~/.gitamine/plugins &> /dev/null');
 
+        $bin = 'bin/gitamine';
+        if (strpos(__DIR__, '.composer') !== false) {
+            $bin = 'gitamine';
+        }
         // TODO Initialize project hooks or update
         foreach (Event::VALID_EVENTS as $event) {
-            \system("echo 'gitamine run {$event}' > {$dir}/.git/hooks/{$event}");
+            \system("echo '$bin run {$event}' > {$dir}/.git/hooks/{$event}");
             \system("chmod +x {$dir}/.git/hooks/{$event}");
         }
 
