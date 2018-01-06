@@ -7,6 +7,10 @@ exec('gitamine f:c | grep -E "\\.php$" | tr \'\r\n\' \',\'', $result);
 $finder = PhpCsFixer\Finder::create()
                            ->in(['src', 'app']);
 
+if (count($result) === 0) {
+    exit(0);
+}
+
 $files = explode(',', $result[0]);
 foreach ($files as $file) {
 
