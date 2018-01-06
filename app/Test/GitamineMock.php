@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Test;
@@ -12,15 +13,13 @@ use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
 use Gitamine\Infrastructure\GitamineConfig;
 use Hamcrest\Matchers;
-use Mockery\MockInterface;
 use Mockery;
+use Mockery\MockInterface;
 
 /**
  *  @SuppressWarnings(PHPMD.TooManyPublicMethods)
  *
  * Class GitamineMock
- *
- * @package Gitamine\Test
  */
 class GitamineMock
 {
@@ -73,7 +72,10 @@ class GitamineMock
      */
     public function shouldRunPlugin(string $plugin, string $event, bool $return): void
     {
-        $thePlugin  = Matchers::equalTo(new Plugin($plugin));
+        $thePlugin = Matchers::equalTo(new GithubPlugin(
+            new GithubPluginName($plugin),
+            new GithubPluginVersion('master')
+        ));
         $theEvent   = Matchers::equalTo(new Event($event));
         $theOptions = Matchers::anInstanceOf(PluginOptions::class);
         $this->gitamine->shouldReceive('runPlugin')

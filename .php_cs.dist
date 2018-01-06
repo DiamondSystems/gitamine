@@ -1,0 +1,60 @@
+<?php
+declare(strict_types=1);
+
+$result = [];
+exec('gitamine f:c | grep -E "\\.php$" | tr \'\r\n\' \',\'', $result);
+
+$finder = PhpCsFixer\Finder::create()
+                           ->in(['src', 'app']);
+
+$files = explode(',', $result[0]);
+foreach ($files as $file) {
+
+    $finder->name($file);
+}
+
+return PhpCsFixer\Config::create()
+                        ->setRiskyAllowed(true)
+                        ->setRules([
+                            '@PSR2'                                 => true,
+                            '@Symfony'                              => true,
+                            '@Symfony:risky'                        => true,
+                            '@PHPUnit60Migration:risky'             => true,
+                            '@PHP71Migration:risky'                 => true,
+                            '@DoctrineAnnotation'                   => true,
+                            'array_syntax'                          => ['syntax' => 'short'],
+                            'align_multiline_comment'               => true,
+                            'binary_operator_spaces'                => ['default' => 'align_single_space_minimal'],
+                            'combine_consecutive_issets'            => true,
+                            'combine_consecutive_unsets'            => true,
+                            'compact_nullable_typehint'             => true,
+                            'concat_space'                          => ['spacing' => 'one'],
+                            'declare_strict_types'                  => true,
+                            'escape_implicit_backslashes'           => true,
+                            'explicit_string_variable'              => true,
+                            'final_internal_class'                  => true,
+                            'general_phpdoc_annotation_remove'      => true,
+                            //'header_comment'                      => true,
+                            'heredoc_to_nowdoc'                     => true,
+                            'linebreak_after_opening_tag'           => true,
+                            'list_syntax'                           => ['syntax' => 'short'],
+                            'mb_str_functions'                      => true,
+                            'native_function_invocation'            => true,
+                            'no_null_property_initialization'       => true,
+                            'no_short_echo_tag'                     => true,
+                            'no_superfluous_elseif'                 => true,
+                            'no_useless_else'                       => true,
+                            'no_useless_return'                     => true,
+                            'ordered_class_elements'                => true,
+                            'ordered_imports'                       => true,
+                            'phpdoc_add_missing_param_annotation'   => true,
+                            'phpdoc_order'                          => true,
+                            'simplified_null_return'                => true,
+                            'strict_comparison'                     => true,
+                            'strict_param'                          => true,
+                            'trailing_comma_in_multiline_array'     => false,
+                            'no_trailing_comma_in_singleline_array' => true,
+                            'no_trailing_comma_in_list_call'        => true
+
+                        ])
+                        ->setFinder($finder);

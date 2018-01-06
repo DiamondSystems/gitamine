@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -9,16 +10,14 @@ use Gitamine\Query\GetGitamineDirectoryQuery;
 use Gitamine\Test\GitamineMock;
 
 /**
- * Class GetGitamineDirectoryQueryHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class GetGitamineDirectoryQueryHandlerTest.
  */
 class GetGitamineDirectoryQueryHandlerTest extends TestCase
 {
     /**
      * @throws InvalidSubversionDirectoryException
      */
-    public function testGetGitamineDirectory()
+    public function testGetGitamineDirectory(): void
     {
         $dir      = '/';
         $gitamine = GitamineMock::create();

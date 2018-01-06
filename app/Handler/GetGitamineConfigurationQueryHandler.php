@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
@@ -10,9 +11,7 @@ use Gitamine\Infrastructure\SubversionRepository;
 use Gitamine\Query\GetGitamineConfigurationQuery;
 
 /**
- * Class GetGitamineConfigurationQueryHandler
- *
- * @package Gitamine\Handler
+ * Class GetGitamineConfigurationQueryHandler.
  */
 class GetGitamineConfigurationQueryHandler
 {
@@ -41,9 +40,9 @@ class GetGitamineConfigurationQueryHandler
     /**
      * @param GetGitamineConfigurationQuery $query
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function __invoke(GetGitamineConfigurationQuery $query): array
     {

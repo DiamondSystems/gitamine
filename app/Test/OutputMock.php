@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Test;
@@ -8,9 +9,7 @@ use Mockery;
 use Mockery\MockInterface;
 
 /**
- * Class OutputMock
- *
- * @package Gitamine\Test
+ * Class OutputMock.
  */
 class OutputMock
 {

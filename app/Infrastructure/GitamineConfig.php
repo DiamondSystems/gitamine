@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Infrastructure;
@@ -7,14 +8,11 @@ use Gitamine\Domain\Directory;
 use Gitamine\Domain\Event;
 use Gitamine\Domain\File;
 use Gitamine\Domain\GithubPlugin;
-use Gitamine\Domain\Hook;
 use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
 
 /**
- * Interface GitamineConfig
- *
- * @package Gitamine\Infrastructure
+ * Interface GitamineConfig.
  */
 interface GitamineConfig
 {
@@ -33,14 +31,19 @@ interface GitamineConfig
     public function getConfiguration(Directory $directory): array;
 
     /**
-     * @param Plugin        $plugin
+     * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
-     * @param string        $output
+     * @param null|string   $output
      *
      * @return bool
      */
-    public function runPlugin(Plugin $plugin, Event $event, PluginOptions $pluginOptions, ?string &$output): bool;
+    public function runPlugin(
+        GithubPlugin $githubPlugin,
+        Event $event,
+        PluginOptions $pluginOptions,
+        ?string &$output
+    ): bool;
 
     /**
      * @param Directory $directory
@@ -70,14 +73,14 @@ interface GitamineConfig
     public function getGitaminePlugins(): array;
 
     /**
-     * @param Plugin $plugin
+     * @param GithubPlugin $gPlugin
      *
      * @return File
      */
-    public function getPluginExecutableFile(Plugin $plugin): File;
+    public function getPluginExecutableFile(GithubPlugin $gPlugin): File;
 
     /**
-     * return the Directory which the project is located
+     * return the Directory which the project is located.
      *
      * @return Directory
      */

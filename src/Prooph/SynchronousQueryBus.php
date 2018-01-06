@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Prooph;
@@ -12,9 +13,7 @@ use Prooph\ServiceBus\Exception\RuntimeException;
 use Prooph\ServiceBus\MessageBus;
 
 /**
- * Class SynchronousQueryBus
- *
- * @package App\Prooph
+ * Class SynchronousQueryBus.
  */
 class SynchronousQueryBus extends MessageBus implements NamedMessageBus
 {
@@ -55,7 +54,7 @@ class SynchronousQueryBus extends MessageBus implements NamedMessageBus
         $actionEventEmitter->attachListener(
             self::EVENT_DISPATCH,
             function (ActionEvent $actionEvent): void {
-                if ($actionEvent->getParam(self::EVENT_PARAM_MESSAGE_NAME) === null) {
+                if (null === $actionEvent->getParam(self::EVENT_PARAM_MESSAGE_NAME)) {
                     $actionEvent->setParam(
                         self::EVENT_PARAM_MESSAGE_NAME,
                         $this->getMessageName($actionEvent->getParam(self::EVENT_PARAM_MESSAGE))
@@ -81,8 +80,8 @@ class SynchronousQueryBus extends MessageBus implements NamedMessageBus
             self::EVENT_DISPATCH,
             function (ActionEvent $actionEvent): void {
                 $handler = $actionEvent->getParam(self::EVENT_PARAM_MESSAGE_HANDLER);
-                if (is_callable($handler)) {
-                    $query  = $actionEvent->getParam(self::EVENT_PARAM_MESSAGE);
+                if (\is_callable($handler)) {
+                    $query = $actionEvent->getParam(self::EVENT_PARAM_MESSAGE);
                     $result = $handler($query);
                     $actionEvent->setParam(self::EVENT_PARAM_RESULT, $result);
                     $actionEvent->setParam(self::EVENT_PARAM_MESSAGE_HANDLED, true);
@@ -94,8 +93,8 @@ class SynchronousQueryBus extends MessageBus implements NamedMessageBus
         $this->events->attachListener(
             self::EVENT_DISPATCH,
             function (ActionEvent $actionEvent): void {
-                if ($actionEvent->getParam(self::EVENT_PARAM_MESSAGE_HANDLER) === null) {
-                    throw new RuntimeException(sprintf(
+                if (null === $actionEvent->getParam(self::EVENT_PARAM_MESSAGE_HANDLER)) {
+                    throw new RuntimeException(\sprintf(
                         'QueryBus was not able to identify a Finder for query %s',
                         $this->getMessageName($actionEvent->getParam(self::EVENT_PARAM_MESSAGE))
                     ));
@@ -108,9 +107,9 @@ class SynchronousQueryBus extends MessageBus implements NamedMessageBus
     /**
      * @param mixed $query
      *
-     * @return mixed
-     *
      * @throws RuntimeException
+     *
+     * @return mixed
      */
     public function dispatch($query)
     {
@@ -126,7 +125,7 @@ class SynchronousQueryBus extends MessageBus implements NamedMessageBus
         try {
             $actionEventEmitter->dispatch($actionEvent);
             if (!$actionEvent->getParam(self::EVENT_PARAM_MESSAGE_HANDLED)) {
-                throw new RuntimeException(sprintf('Query %s was not handled', $this->getMessageName($query)));
+                throw new RuntimeException(\sprintf('Query %s was not handled', $this->getMessageName($query)));
             }
         } catch (\Throwable $exception) {
             $actionEvent->setParam(self::EVENT_PARAM_EXCEPTION, $exception);

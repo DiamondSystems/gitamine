@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
@@ -16,9 +17,7 @@ use Gitamine\Infrastructure\Output;
 use Gitamine\Query\GetProjectDirectoryQuery;
 
 /**
- * Class RunPluginCommandHandler
- *
- * @package Gitamine\Handler
+ * Class RunPluginCommandHandler.
  */
 class RunPluginCommandHandler
 {
@@ -56,7 +55,7 @@ class RunPluginCommandHandler
      *
      * @throws PluginExecutionFailedException
      */
-    public function __invoke(RunPluginCommand $query)
+    public function __invoke(RunPluginCommand $query): void
     {
         $dir    = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
         $plugin = new Plugin($query->plugin());
@@ -66,7 +65,6 @@ class RunPluginCommandHandler
         $result  = '';
 
         if ($options->enabled()) {
-
             /** @var GithubPlugin $githubPlugin */
             $githubPlugin = $this->gitamine->getGithubPluginForPlugin($plugin);
 
@@ -78,9 +76,9 @@ class RunPluginCommandHandler
             }
 
             // Running part
-            $this->output->print(str_pad("<info>Running</info> {$plugin->name()}:", 36));
+            $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
 
-            $success = $this->gitamine->runPlugin($plugin, $event, $options, $result);
+            $success = $this->gitamine->runPlugin($githubPlugin, $event, $options, $result);
 
             if (!$success) {
                 $this->output->println("\t<fail>✘</fail>");

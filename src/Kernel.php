@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App;
@@ -13,9 +14,7 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
 /**
- * Class Kernel
- *
- * @package App
+ * Class Kernel.
  */
 class Kernel extends BaseKernel
 {
@@ -59,13 +58,13 @@ class Kernel extends BaseKernel
      *
      * @throws Exception
      */
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir() . '/config';
         $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
-        if (is_dir($confDir . '/packages/' . $this->environment)) {
+        if (\is_dir($confDir . '/packages/' . $this->environment)) {
             $loader->load($confDir . '/packages/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
         }
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');
@@ -77,13 +76,13 @@ class Kernel extends BaseKernel
      *
      * @throws FileLoaderLoadException
      */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir() . '/config';
-        if (is_dir($confDir . '/routes/')) {
+        if (\is_dir($confDir . '/routes/')) {
             $routes->import($confDir . '/routes/*' . self::CONFIG_EXTS, '/', 'glob');
         }
-        if (is_dir($confDir . '/routes/' . $this->environment)) {
+        if (\is_dir($confDir . '/routes/' . $this->environment)) {
             $routes->import($confDir . '/routes/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
         }
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');

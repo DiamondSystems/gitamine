@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -8,9 +9,7 @@ use Gitamine\Domain\Directory;
 use Throwable;
 
 /**
- * Class InvalidSubversionDirectoryException
- *
- * @package Gitamine\Exception
+ * Class InvalidSubversionDirectoryException.
  */
 class InvalidSubversionDirectoryException extends Exception
 {

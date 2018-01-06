@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
 
 /**
- * Class PluginOptions
- *
- * @package Gitamine\Domain
+ * Class PluginOptions.
  */
 class PluginOptions
 {

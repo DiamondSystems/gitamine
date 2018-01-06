@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -11,13 +12,11 @@ use Gitamine\Test\GitamineMock;
 use Gitamine\Test\QueryBusMock;
 
 /**
- * Class GetConfiguratedPluginsQueryHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class GetConfiguratedPluginsQueryHandlerTest.
  */
 class GetConfiguratedPluginsQueryHandlerTest extends TestCase
 {
-    public function testGetConfiguratedPlugins()
+    public function testGetConfiguratedPlugins(): void
     {
         $dir      = '/';
         $bus      = QueryBusMock::create();

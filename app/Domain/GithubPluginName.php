@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
@@ -6,9 +7,7 @@ namespace Gitamine\Domain;
 use Gitamine\Exception\GithubProjectDoesNotExist;
 
 /**
- * Class GithubPluginName
- *
- * @package Gitamine\Domain
+ * Class GithubPluginName.
  */
 class GithubPluginName
 {
@@ -28,7 +27,7 @@ class GithubPluginName
     {
         $this->plugin = $plugin;
 
-        if (substr_count($plugin, '/') + 1 !== 2) {
+        if (2 !== \mb_substr_count($plugin, '/') + 1) {
             throw new GithubProjectDoesNotExist($plugin);
         }
     }

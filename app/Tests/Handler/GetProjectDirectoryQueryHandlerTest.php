@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -9,9 +10,7 @@ use Gitamine\Query\GetProjectDirectoryQuery;
 use Gitamine\Test\GitamineMock;
 
 /**
- * Class GetProjectDirectoryQueryHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class GetProjectDirectoryQueryHandlerTest.
  */
 class GetProjectDirectoryQueryHandlerTest extends TestCase
 {
@@ -20,7 +19,7 @@ class GetProjectDirectoryQueryHandlerTest extends TestCase
      */
     public function testGetGitamineCurrentDirectory(): void
     {
-        $dir = '/';
+        $dir      = '/';
         $gitamine = GitamineMock::create();
 
         $gitamine->shouldGetProjectFolder($dir);

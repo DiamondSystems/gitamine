@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
@@ -7,9 +8,7 @@ use Gitamine\Infrastructure\GitamineConfig;
 use Gitamine\Query\GetProjectDirectoryQuery;
 
 /**
- * Class GetProjectDirectoryQueryHandler
- *
- * @package Gitamine\Handler
+ * Class GetProjectDirectoryQueryHandler.
  */
 class GetProjectDirectoryQueryHandler
 {
@@ -29,6 +28,8 @@ class GetProjectDirectoryQueryHandler
     }
 
     /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
      * @param GetProjectDirectoryQuery $query
      *
      * @return string

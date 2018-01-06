@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
@@ -7,9 +8,7 @@ use DirectoryIterator;
 use Gitamine\Exception\InvalidDirException;
 
 /**
- * Class Directory
- *
- * @package Gitamine\Domain
+ * Class Directory.
  */
 class Directory
 {
@@ -25,11 +24,11 @@ class Directory
      */
     public function __construct(string $dir)
     {
-        if (!is_dir($dir)) {
-            throw new InvalidDirException("Invalid dir '$dir'", 1);
+        if (!\is_dir($dir)) {
+            throw new InvalidDirException("Invalid dir '${dir}'", 1);
         }
 
-        $this->dir = realpath($dir);
+        $this->dir = \realpath($dir);
     }
 
     /**
@@ -45,9 +44,9 @@ class Directory
      *
      * @return Directory
      */
-    public function cd(string $folder): self
+    public function openDir(string $folder): self
     {
-        return new Directory($this->dir() . '/' . $folder);
+        return new self($this->dir() . '/' . $folder);
     }
 
     /**
@@ -55,7 +54,7 @@ class Directory
      *
      * @return File
      */
-    public function open(string $file): File
+    public function openFile(string $file): File
     {
         return new File($this->dir() . '/' . $file);
     }
@@ -70,7 +69,7 @@ class Directory
 
         foreach ($dir as $fileInfo) {
             if ($fileInfo->isDir() && !$fileInfo->isDot()) {
-                $dirs[] = $this->cd($fileInfo->getFilename());
+                $dirs[] = $this->openDir($fileInfo->getFilename());
             }
         }
 
@@ -87,7 +86,7 @@ class Directory
 
         foreach ($dir as $fileInfo) {
             if ($fileInfo->isFile() && !$fileInfo->isDot()) {
-                $files[] = $this->open($fileInfo->getFilename());
+                $files[] = $this->openFile($fileInfo->getFilename());
             }
         }
 
@@ -99,6 +98,6 @@ class Directory
      */
     public function name(): string
     {
-        return basename($this->dir());
+        return \basename($this->dir());
     }
 }

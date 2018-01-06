@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Test;
@@ -10,9 +11,7 @@ use Mockery;
 use Mockery\MockInterface;
 
 /**
- * Class VersionControlMock
- *
- * @package Gitamine\Test
+ * Class VersionControlMock.
  */
 class VersionControlMock
 {

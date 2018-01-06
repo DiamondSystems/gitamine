@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
 
 /**
- * Class GithubPluginVersion
- *
- * @package Gitamine\Domain
+ * Class GithubPluginVersion.
  */
 class GithubPluginVersion
 {

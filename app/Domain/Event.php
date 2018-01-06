@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
@@ -6,8 +7,7 @@ namespace Gitamine\Domain;
 use Gitamine\Exception\InvalidEventException;
 
 /**
- * Class Event
- * @package Gitamine\Domain
+ * Class Event.
  */
 class Event
 {
@@ -61,7 +61,7 @@ class Event
      */
     public function __construct(string $event)
     {
-        if (!in_array($event, self::VALID_EVENTS, true)) {
+        if (!\in_array($event, self::VALID_EVENTS, true)) {
             throw new InvalidEventException($event);
         }
         $this->event = $event;

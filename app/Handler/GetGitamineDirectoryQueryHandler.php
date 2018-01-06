@@ -1,16 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
 
 use Gitamine\Infrastructure\GitamineConfig;
 use Gitamine\Query\GetGitamineDirectoryQuery;
-use React\Promise\Deferred;
 
 /**
- * Class GetGitamineDirectoryQueryHandler
- *
- * @package Gitamine\Handler
+ * Class GetGitamineDirectoryQueryHandler.
  */
 class GetGitamineDirectoryQueryHandler
 {
@@ -30,12 +28,13 @@ class GetGitamineDirectoryQueryHandler
     }
 
     /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
      * @param GetGitamineDirectoryQuery $query
-     * @param Deferred|null             $deferred
      *
      * @return string
      */
-    public function __invoke(GetGitamineDirectoryQuery $query, ?Deferred $deferred = null): string
+    public function __invoke(GetGitamineDirectoryQuery $query): string
     {
         return $this->gitamine->getGitamineFolder()->dir();
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Test;
@@ -9,9 +10,7 @@ use Mockery;
 use Mockery\MockInterface;
 
 /**
- * Class QueryBusMock
- *
- * @package Gitamine\Test
+ * Class QueryBusMock.
  */
 class QueryBusMock
 {

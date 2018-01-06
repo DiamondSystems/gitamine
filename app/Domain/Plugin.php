@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
@@ -6,9 +7,7 @@ namespace Gitamine\Domain;
 use Gitamine\Exception\PluginNotInstalledException;
 
 /**
- * Class Plugin
- *
- * @package Gitamine\Domain
+ * Class Plugin.
  */
 class Plugin
 {
@@ -21,15 +20,14 @@ class Plugin
      * Plugin constructor.
      *
      * @param string $plugin
-     *
-     * @throws PluginNotInstalledException
      */
     public function __construct(string $plugin)
     {
-        // TODO improve quelity
-        if (!is_dir($_SERVER['HOME'] . '/.gitamine/plugins/' . $plugin)) {
-            throw new PluginNotInstalledException("$plugin is not installed");
+        /* TODO improve quality
+        if (!\is_dir($_SERVER['HOME'] . '/.gitamine/plugins/' . $plugin)) {
+            throw new PluginNotInstalledException("${plugin} is not installed");
         }
+        */
         $this->name = $plugin;
     }
 

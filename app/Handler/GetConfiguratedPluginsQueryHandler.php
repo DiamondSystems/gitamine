@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
@@ -6,16 +7,12 @@ namespace Gitamine\Handler;
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Domain\Directory;
 use Gitamine\Domain\Event;
-use Gitamine\Exception\InvalidFileException;
-use Gitamine\Exception\InvalidGitamineProjectException;
 use Gitamine\Infrastructure\GitamineConfig;
 use Gitamine\Query\GetConfiguratedPluginsQuery;
 use Gitamine\Query\GetProjectDirectoryQuery;
 
 /**
- * Class GetConfiguratedPluginsQueryHandler
- *
- * @package Gitamine\Handler
+ * Class GetConfiguratedPluginsQueryHandler.
  */
 class GetConfiguratedPluginsQueryHandler
 {

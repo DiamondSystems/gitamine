@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Command;
 
 /**
- * Class InstallPluginCommand
- * @package Gitamine\Command
+ * Class InstallPluginCommand.
  */
 class InstallPluginCommand
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Domain;
@@ -9,32 +10,29 @@ use Gitamine\Exception\InvalidFileException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class DirectoryTest
- *
- * @package Gitamine\Tests\Domain
+ * Class DirectoryTest.
  */
 class DirectoryTest extends TestCase
 {
-
-    public function testShouldWork()
+    public function testShouldWork(): void
     {
-        $dir = (new Directory(__DIR__))->cd('../__assets');
-        self::assertEquals('folder1', $dir->cd('folder1')->name());
-        self::assertEquals($dir->dir() . '/file1.txt', $dir->open('file1.txt')->file());
-        self::assertEquals('file1.txt', $dir->open('file1.txt')->name());
-        self::assertEquals([$dir->open('file1.txt')], $dir->files());
-        self::assertEquals([$dir->cd('folder1')], $dir->directories());
+        $dir = (new Directory(__DIR__))->openDir('../__assets');
+        self::assertEquals('folder1', $dir->openDir('folder1')->name());
+        self::assertEquals($dir->dir() . '/file1.txt', $dir->openFile('file1.txt')->file());
+        self::assertEquals('file1.txt', $dir->openFile('file1.txt')->name());
+        self::assertEquals([$dir->openFile('file1.txt')], $dir->files());
+        self::assertEquals([$dir->openDir('folder1')], $dir->directories());
     }
 
-    public function testShouldThrowInvalidDirException()
+    public function testShouldThrowInvalidDirException(): void
     {
         $this->expectException(InvalidDirException::class);
         new Directory('asd');
     }
 
-    public function testShouldThrowInvalid()
+    public function testShouldThrowInvalid(): void
     {
         $this->expectException(InvalidFileException::class);
-        (new Directory(__DIR__))->open('anything');
+        (new Directory(__DIR__))->openFile('anything');
     }
 }

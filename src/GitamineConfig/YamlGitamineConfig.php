@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\GitamineConfig;
@@ -17,12 +18,11 @@ use Gitamine\Exception\MissingConfigurationFileException;
 use Gitamine\Infrastructure\GitamineConfig;
 
 /**
- * TODO
+ * TODO.
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * Class YamlGitamineConfig
- *
- * @package App\GitamineConfig
  */
 class YamlGitamineConfig implements GitamineConfig
 {
@@ -40,7 +40,7 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getConfigurationFile(Directory $directory): File
     {
-        return $directory->open(self::GITAMINE_FILE);
+        return $directory->openFile(self::GITAMINE_FILE);
     }
 
     /**
@@ -64,29 +64,34 @@ class YamlGitamineConfig implements GitamineConfig
     }
 
     /**
-     * @param Plugin        $plugin
+     * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
      * @param null|string   $output
      *
      * @return bool
      */
-    public function runPlugin(Plugin $plugin, Event $event, PluginOptions $pluginOptions, ?string &$output = null): bool
-    {
+    public function runPlugin(
+        GithubPlugin $githubPlugin,
+        Event $event,
+        PluginOptions $pluginOptions,
+        ?string &$output
+    ): bool {
         $status = 0;
         $out    = [];
 
         $params = ' --event=' . $event->event();
 
         foreach ($pluginOptions->options() as $key => $value) {
-            $params .= sprintf(' --%s=%s', $key, $value);
+            $params .= \sprintf(' --%s=%s', $key, $value);
         }
 
         // passthru
-        exec($this->getPluginExecutableFile($plugin)->file() . $params . ' 2>&1', $out, $status);
-        $output = implode("\n", $out);
+        \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
+        $output = \implode("\n", $out);
+        //\passthru($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $status);
 
-        return $status === 0;
+        return 0 === $status;
     }
 
     /**
@@ -102,7 +107,7 @@ class YamlGitamineConfig implements GitamineConfig
 
         $plugins = [];
 
-        foreach (array_keys($config['plugins']) as $plugin) {
+        foreach (\array_keys($config['plugins']) as $plugin) {
             $plugins[] = new Plugin($plugin);
         }
 
@@ -129,7 +134,7 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getGitamineFolder(): Directory
     {
-        return $this->getHomeFolder()->cd('.gitamine');
+        return $this->getHomeFolder()->openDir('.gitamine');
     }
 
     /**
@@ -137,7 +142,7 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getGitaminePlugins(): array
     {
-        $pluginsDir = $this->getGitamineFolder()->cd('plugins')->directories();
+        $pluginsDir = $this->getGitamineFolder()->openDir('plugins')->directories();
         $plugins    = [];
 
         foreach ($pluginsDir as $pluginDir) {
@@ -148,23 +153,13 @@ class YamlGitamineConfig implements GitamineConfig
     }
 
     /**
-     * @param Plugin $plugin
+     * @param GithubPlugin $githubPlugin
      *
      * @return File
      */
-    public function getPluginExecutableFile(Plugin $plugin): File
+    public function getPluginExecutableFile(GithubPlugin $githubPlugin): File
     {
-        return $this->getGitamineFolder()->cd('plugins')->cd($plugin->name())->open('run');
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.Superglobals)
-     *
-     * @return Directory
-     */
-    private function getHomeFolder(): Directory
-    {
-        return new Directory($_SERVER['HOME']);
+        return $this->getGitamineFolder()->openDir('plugins')->openDir($githubPlugin->name()->name())->openFile('run');
     }
 
     /**
@@ -172,31 +167,31 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getProjectFolder(): Directory
     {
-        return new Directory(getcwd());
+        return new Directory(\getcwd());
     }
 
     /**
      * @param GithubPlugin $plugin
      *
-     * @return string
-     *
      * @throws GithubProjectDoesNotExist
      * @throws MissingConfigurationFileException
+     *
+     * @return string
      */
     public function installGithubPlugin(GithubPlugin $plugin): string
     {
-        $curl = curl_init(
-            sprintf(
+        $curl = \curl_init(
+            \sprintf(
                 'https://raw.githubusercontent.com/%s/%s/gitamine.json',
                 $plugin->name()->name(),
                 $plugin->version()->version()
             )
         );
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        \curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = \curl_exec($curl);
+        $httpCode = \curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        if ($httpCode !== 200) {
+        if (200 !== $httpCode) {
             //TODO add ... with version XXX
             throw new GithubProjectDoesNotExist($plugin->name()->name());
         }
@@ -207,16 +202,16 @@ class YamlGitamineConfig implements GitamineConfig
 
         $dir = $this->getGitamineFolder()->name();
 
-        exec(
-            sprintf(
+        \exec(
+            \sprintf(
                 'rm -Rf ~/%s/plugins/%s > /dev/null',
                 $dir,
                 $plugin->name()->name()
             )
         );
 
-        exec(
-            sprintf(
+        \exec(
+            \sprintf(
                 'git clone git@github.com:%s.git ~/%s/plugins/%s',
                 $plugin->name()->name(),
                 $dir,
@@ -224,8 +219,8 @@ class YamlGitamineConfig implements GitamineConfig
             )
         );
 
-        exec(
-            sprintf(
+        \exec(
+            \sprintf(
                 'cd %s/plugins/%s 2> /dev/null; git checkout %s 2> /dev/null',
                 $dir,
                 $plugin->name()->name(),
@@ -268,11 +263,21 @@ class YamlGitamineConfig implements GitamineConfig
     public function isPluginInstalled(GithubPlugin $plugin): bool
     {
         try {
-            $this->getGitamineFolder()->cd('plugins')->cd($plugin->name()->name());
+            $this->getGitamineFolder()->openDir('plugins')->openDir($plugin->name()->name());
         } catch (InvalidDirException $e) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.Superglobals)
+     *
+     * @return Directory
+     */
+    private function getHomeFolder(): Directory
+    {
+        return new Directory($_SERVER['HOME']);
     }
 }

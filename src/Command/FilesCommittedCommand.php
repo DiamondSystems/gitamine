@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -13,9 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class FilesCommittedCommand
- *
- * @package App\Command
+ * Class FilesCommittedCommand.
  */
 class FilesCommittedCommand extends ContainerAwareCommand
 {
@@ -46,11 +45,11 @@ class FilesCommittedCommand extends ContainerAwareCommand
 
         try {
             $projectDir = $this->getProjectDirectory();
-            $files      = array_merge(
+            $files      = \array_merge(
                 $this->getAddedFiles($projectDir),
                 $this->getModifiedFiles($projectDir)
             );
-            sort($files);
+            \sort($files);
 
             foreach ($files as $file) {
                 $output->writeln($file);

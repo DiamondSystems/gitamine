@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -7,9 +8,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class InvalidEventException
- *
- * @package Gitamine\Exception
+ * Class InvalidEventException.
  */
 class InvalidEventException extends RuntimeException
 {
@@ -21,6 +20,6 @@ class InvalidEventException extends RuntimeException
      */
     public function __construct(string $event, Throwable $previous = null)
     {
-        parent::__construct("Invalid event '$event'", 1, $previous);
+        parent::__construct("Invalid event '{$event}'", 1, $previous);
     }
 }

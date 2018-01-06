@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Infrastructure;
 
 /**
- * Interface ConsoleOutput
- *
- * @package Gitamine\Infrastructure
+ * Interface ConsoleOutput.
  */
 interface Output
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\SubversionRepository;
@@ -9,9 +10,7 @@ use Gitamine\Exception\InvalidSubversionDirectoryException;
 use Gitamine\Infrastructure\SubversionRepository;
 
 /**
- * Class GitRepository
- *
- * @package App\SubversionRepository
+ * Class GitRepository.
  */
 class GitRepository implements SubversionRepository
 {
@@ -41,9 +40,9 @@ class GitRepository implements SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return Directory
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return Directory
      */
     public function getRootDir(Directory $dir): Directory
     {
@@ -53,9 +52,9 @@ class GitRepository implements SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function getNewFiles(Directory $dir): array
     {
@@ -65,9 +64,9 @@ class GitRepository implements SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function getUpdatedFiles(Directory $dir): array
     {
@@ -77,9 +76,9 @@ class GitRepository implements SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function getDeletedFiles(Directory $dir): array
     {
@@ -89,9 +88,9 @@ class GitRepository implements SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function getBranchName(Directory $dir): array
     {
@@ -102,19 +101,19 @@ class GitRepository implements SubversionRepository
      * @param string $source
      * @param string $destiny
      *
-     * @return File[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return File[]
      */
     public function getFilesModifiedOnBranch(Directory $dir, string $source, string $destiny): array
     {
         $dir = $this->getRootDir($dir);
-        $out = $this->run($dir, sprintf(self::GIT_BRANCH_FILES, $source, $destiny));
+        $out = $this->run($dir, \sprintf(self::GIT_BRANCH_FILES, $source, $destiny));
 
-        $rawFiles = explode('\n', $out);
+        $rawFiles = \explode('\n', $out);
         $ret      = [];
         foreach ($rawFiles as $rawFile) {
-            $ret[] = $dir->open($rawFile);
+            $ret[] = $dir->openFile($rawFile);
         }
 
         return $ret;
@@ -124,16 +123,16 @@ class GitRepository implements SubversionRepository
      * @param Directory $dir
      * @param string    $command
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     private function run(Directory $dir, string $command): array
     {
         $error  = 0;
         $output = [];
 
-        exec(sprintf('cd %s 2> /dev/null ; %s 2> /dev/null', $dir->dir(), $command), $output, $error);
+        \exec(\sprintf('cd %s 2> /dev/null ; %s 2> /dev/null', $dir->dir(), $command), $output, $error);
 
         if ($error) {
             throw new InvalidSubversionDirectoryException($dir);
@@ -141,5 +140,4 @@ class GitRepository implements SubversionRepository
 
         return $output;
     }
-
 }

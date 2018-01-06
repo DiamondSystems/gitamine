@@ -1,15 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
 
-use Gitamine\Exception\InvalidDirException;
 use Gitamine\Exception\InvalidFileException;
 
 /**
- * Class Directory
- *
- * @package Gitamine\Domain
+ * Class Directory.
  */
 class File
 {
@@ -25,8 +23,8 @@ class File
      */
     public function __construct(string $file)
     {
-        if (!is_file($file)) {
-            throw new InvalidFileException("Invalid file '$file'", 1);
+        if (!\is_file($file)) {
+            throw new InvalidFileException("Invalid file '${file}'", 1);
         }
 
         $this->file = $file;
@@ -45,6 +43,6 @@ class File
      */
     public function name(): string
     {
-        return basename($this->file());
+        return \basename($this->file());
     }
 }

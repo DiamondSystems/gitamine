@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Domain;
@@ -10,13 +11,11 @@ use Gitamine\Exception\GithubProjectDoesNotExist;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class GithubPluginTest
- * @package Gitamine\Tests\Domain
+ * Class GithubPluginTest.
  */
 class GithubPluginTest extends TestCase
 {
-
-    public function testReturnValidValues()
+    public function testReturnValidValues(): void
     {
         $plugin = new GithubPlugin(
             new GithubPluginName('test/test'),
@@ -27,7 +26,7 @@ class GithubPluginTest extends TestCase
         self::assertEquals('master', $plugin->version()->version());
     }
 
-    public function testShoulThrowGithubProjectDoesNotExistException()
+    public function testShoulThrowGithubProjectDoesNotExistException(): void
     {
         $this->expectException(GithubProjectDoesNotExist::class);
 

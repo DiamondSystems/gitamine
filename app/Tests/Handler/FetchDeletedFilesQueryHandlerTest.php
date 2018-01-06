@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -10,17 +11,14 @@ use Gitamine\Query\FetchDeletedFilesQuery;
 use Gitamine\Test\VersionControlMock;
 
 /**
- * Class FetchDeletedFilesQueryHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class FetchDeletedFilesQueryHandlerTest.
  */
 class FetchDeletedFilesQueryHandlerTest extends TestCase
 {
-
     /**
      * @throws InvalidSubversionDirectoryException
      */
-    public function testShouldFetchAddedFiles()
+    public function testShouldFetchAddedFiles(): void
     {
         $dir  = '/';
         $repo = VersionControlMock::create();
@@ -38,7 +36,7 @@ class FetchDeletedFilesQueryHandlerTest extends TestCase
     /**
      * @throws InvalidSubversionDirectoryException
      */
-    public function testShouldThrowInvalidSubversionDirectoryException()
+    public function testShouldThrowInvalidSubversionDirectoryException(): void
     {
         $this->expectException(InvalidSubversionDirectoryException::class);
 

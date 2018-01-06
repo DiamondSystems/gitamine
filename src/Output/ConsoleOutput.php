@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Output;
@@ -8,9 +9,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
 
 /**
- * Class ConsoleOutput
- *
- * @package App\Output
+ * Class ConsoleOutput.
  */
 class ConsoleOutput implements Output
 {
@@ -51,7 +50,7 @@ class ConsoleOutput implements Output
      */
     public function printError(string $message): void
     {
-        $this->output->getErrorOutput()->writeln("$message");
+        $this->output->getErrorOutput()->writeln("${message}");
     }
 
     /**
@@ -71,9 +70,9 @@ class ConsoleOutput implements Output
             echo $row
         ';
 
-        $line = shell_exec($command);
+        $line = \shell_exec($command);
 
-        return (int)$line;
+        return (int) $line;
     }
 
     /**
@@ -93,9 +92,9 @@ class ConsoleOutput implements Output
             echo $col
         ';
 
-        $col = shell_exec($command);
+        $col = \shell_exec($command);
 
-        return (int)$col;
+        return (int) $col;
     }
 
     /**
@@ -113,14 +112,14 @@ class ConsoleOutput implements Output
             $max = $row;
         }
 
-        for ($i = $min; $i <= $max; $i++) {
-            system(sprintf('tput cup %d %d', $i, $col));
+        for ($i = $min; $i <= $max; ++$i) {
+            \system(\sprintf('tput cup %d %d', $i, $col));
         }
-        system(sprintf('tput cup %d %d', $row, $col));
+        \system(\sprintf('tput cup %d %d', $row, $col));
     }
 
     public function clearLine(): void
     {
-        system('printf "%${COLUMNS}s" ""');
+        \system('printf "%${COLUMNS}s" ""');
     }
 }

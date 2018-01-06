@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -6,11 +7,8 @@ namespace Gitamine\Exception;
 use RuntimeException;
 
 /**
- * Class InvalidFileException
- *
- * @package Gitamine\Exception
+ * Class InvalidFileException.
  */
 class InvalidFileException extends RuntimeException
 {
-
 }

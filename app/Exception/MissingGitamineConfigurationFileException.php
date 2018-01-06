@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -6,11 +7,8 @@ namespace Gitamine\Exception;
 use Exception;
 
 /**
- * Class InvalidDirException
- *
- * @package Gitamine\Exception
+ * Class InvalidDirException.
  */
 class MissingGitamineConfigurationFileException extends Exception
 {
-
 }

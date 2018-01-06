@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -7,8 +8,7 @@ use Exception;
 use Throwable;
 
 /**
- * Class MissingConfigurationFileException
- * @package Gitamine\Exception
+ * Class MissingConfigurationFileException.
  */
 class MissingConfigurationFileException extends Exception
 {

@@ -1,19 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
 
 use Gitamine\Domain\Directory;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Infrastructure\InvalidSubversionCommand;
-use Gitamine\Infrastructure\InvalidSubversionDirectory;
 use Gitamine\Infrastructure\SubversionRepository;
 use Gitamine\Query\FetchCommittedFilesQuery;
 
 /**
- * Class FetchCommittedFilesQueryHandler
- *
- * @package Gitamine\Handler
+ * Class FetchCommittedFilesQueryHandler.
  */
 class FetchCommittedFilesQueryHandler
 {
@@ -35,9 +32,9 @@ class FetchCommittedFilesQueryHandler
     /**
      * @param FetchCommittedFilesQuery $query
      *
-     * @return string[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return string[]
      */
     public function __invoke(FetchCommittedFilesQuery $query): array
     {
@@ -50,6 +47,6 @@ class FetchCommittedFilesQueryHandler
         $newFiles     = $this->repository->getNewFiles($dir);
         $updatedFiles = $this->repository->getUpdatedFiles($dir);
 
-        return array_merge($newFiles, $updatedFiles);
+        return \array_merge($newFiles, $updatedFiles);
     }
 }

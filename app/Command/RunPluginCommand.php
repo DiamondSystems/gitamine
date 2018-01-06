@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Command;
 
 /**
- * Class RunPluginCommand
- *
- * @package Gitamine\Command
+ * Class RunPluginCommand.
  */
 class RunPluginCommand
 {
@@ -29,7 +28,7 @@ class RunPluginCommand
     public function __construct(string $plugin, string $event)
     {
         $this->plugin = $plugin;
-        $this->event = $event;
+        $this->event  = $event;
     }
 
     /**

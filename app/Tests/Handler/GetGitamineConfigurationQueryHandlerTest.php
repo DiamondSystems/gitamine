@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -11,16 +12,14 @@ use Gitamine\Test\GitamineMock;
 use Gitamine\Test\VersionControlMock;
 
 /**
- * Class GetConfiguratedPluginsQueryHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class GetConfiguratedPluginsQueryHandlerTest.
  */
 class GetGitamineConfigurationQueryHandlerTest extends TestCase
 {
     /**
      * @throws InvalidSubversionDirectoryException
      */
-    public function testGetConfiguratedPlugins()
+    public function testGetConfiguratedPlugins(): void
     {
         $dir      = '/';
         $git      = VersionControlMock::create();
@@ -39,7 +38,7 @@ class GetGitamineConfigurationQueryHandlerTest extends TestCase
     /**
      * @throws InvalidSubversionDirectoryException
      */
-    public function testShouldThrowInvalidSubversionDirectoryException()
+    public function testShouldThrowInvalidSubversionDirectoryException(): void
     {
         $this->expectException(InvalidSubversionDirectoryException::class);
 

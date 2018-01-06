@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -12,9 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class FilesAddedCommand
- *
- * @package App\Command
+ * Class FilesAddedCommand.
  */
 class FilesAddedCommand extends ContainerAwareCommand
 {
@@ -46,13 +45,14 @@ class FilesAddedCommand extends ContainerAwareCommand
         try {
             $projectDir = $this->getProjectDirectory();
             $files      = $this->getAddedFiles($projectDir);
-            sort($files);
+            \sort($files);
 
             foreach ($files as $file) {
                 $output->writeln($file);
             }
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
+
             return $e->getCode();
         }
 

@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Query;
 
 /**
- * Class FetchAddedFilesQuery
- *
- * @package Gitamine\Query
+ * Class FetchAddedFilesQuery.
  */
 class FetchAddedFilesQuery
 {

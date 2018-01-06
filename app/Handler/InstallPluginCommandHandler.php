@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
@@ -11,9 +12,7 @@ use Gitamine\Infrastructure\GitamineConfig;
 use Gitamine\Infrastructure\Output;
 
 /**
- * Class InstallPluginCommandHandler
- *
- * @package Gitamine\Handler
+ * Class InstallPluginCommandHandler.
  */
 class InstallPluginCommandHandler
 {
@@ -42,12 +41,13 @@ class InstallPluginCommandHandler
     /**
      * @param InstallPluginCommand $command
      */
-    public function __invoke(InstallPluginCommand $command)
+    public function __invoke(InstallPluginCommand $command): void
     {
         $plugin = new GithubPlugin(
             new GithubPluginName($command->name()),
             new GithubPluginVersion($command->version())
         );
+
         $this->gitamine->installGithubPlugin($plugin);
     }
 }

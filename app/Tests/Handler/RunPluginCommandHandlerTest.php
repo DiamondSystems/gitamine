@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -14,16 +15,14 @@ use Gitamine\Test\OutputMock;
 use Gitamine\Test\QueryBusMock;
 
 /**
- * Class RunPluginCommandHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class RunPluginCommandHandlerTest.
  */
 class RunPluginCommandHandlerTest extends TestCase
 {
     /**
      * @throws PluginExecutionFailedException
      */
-    public function testShouldRunPlugin()
+    public function testShouldRunPlugin(): void
     {
         $dir = '/';
 
@@ -36,7 +35,7 @@ class RunPluginCommandHandlerTest extends TestCase
         $gitamine->shouldPluginBeInstalled('test/test', 'master', true);
         $gitamine->shouldGetGithubPluginForPlugin('test', 'test/test', 'master');
         $gitamine->shouldGetOptionsForPlugin('test', 'pre-commit');
-        $gitamine->shouldRunPlugin('test', 'pre-commit', true);
+        $gitamine->shouldRunPlugin('test/test', 'pre-commit', true);
 
         $handler = new RunPluginCommandHandler($bus->bus(), $gitamine->gitamine(), $output->output());
         $handler(new RunPluginCommand('test', 'pre-commit'));
@@ -45,7 +44,7 @@ class RunPluginCommandHandlerTest extends TestCase
     /**
      * @throws PluginExecutionFailedException
      */
-    public function testShouldThrowPluginExecutionFailedException()
+    public function testShouldThrowPluginExecutionFailedException(): void
     {
         $this->expectException(PluginExecutionFailedException::class);
 
@@ -60,7 +59,7 @@ class RunPluginCommandHandlerTest extends TestCase
         $gitamine->shouldPluginBeInstalled('test/test', 'master', true);
         $gitamine->shouldGetGithubPluginForPlugin('test', 'test/test', 'master');
         $gitamine->shouldGetOptionsForPlugin('test', 'pre-commit');
-        $gitamine->shouldRunPlugin('test', 'pre-commit', false);
+        $gitamine->shouldRunPlugin('test/test', 'pre-commit', false);
 
         $handler = new RunPluginCommandHandler($bus->bus(), $gitamine->gitamine(), $output->output());
         $handler(new RunPluginCommand('test', 'pre-commit'));
@@ -69,7 +68,7 @@ class RunPluginCommandHandlerTest extends TestCase
     /**
      * @throws PluginExecutionFailedException
      */
-    public function testShouldInstallUninstalledPlugins()
+    public function testShouldInstallUninstalledPlugins(): void
     {
         $this->expectException(PluginExecutionFailedException::class);
 
@@ -84,7 +83,7 @@ class RunPluginCommandHandlerTest extends TestCase
         $gitamine->shouldPluginBeInstalled('test/test', 'master', false);
         $gitamine->shouldGetGithubPluginForPlugin('test', 'test/test', 'master');
         $gitamine->shouldGetOptionsForPlugin('test', 'pre-commit');
-        $gitamine->shouldRunPlugin('test', 'pre-commit', false);
+        $gitamine->shouldRunPlugin('test/test', 'pre-commit', false);
         $bus->shouldDispatch(new InstallPluginCommand('test/test', 'master'), '');
 
         $handler = new RunPluginCommandHandler($bus->bus(), $gitamine->gitamine(), $output->output());

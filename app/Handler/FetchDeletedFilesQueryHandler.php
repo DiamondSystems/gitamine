@@ -1,19 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
 
 use Gitamine\Domain\Directory;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Infrastructure\InvalidSubversionCommand;
-use Gitamine\Infrastructure\InvalidSubversionDirectory;
 use Gitamine\Infrastructure\SubversionRepository;
 use Gitamine\Query\FetchDeletedFilesQuery;
 
 /**
- * Class FetchDeletedFilesQueryHandler
- *
- * @package Gitamine\Handler
+ * Class FetchDeletedFilesQueryHandler.
  */
 class FetchDeletedFilesQueryHandler
 {
@@ -35,9 +32,9 @@ class FetchDeletedFilesQueryHandler
     /**
      * @param FetchDeletedFilesQuery $query
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function __invoke(FetchDeletedFilesQuery $query): array
     {

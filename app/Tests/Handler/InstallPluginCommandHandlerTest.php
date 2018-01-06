@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Handler;
@@ -10,13 +11,11 @@ use Gitamine\Test\GitamineMock;
 use Gitamine\Test\OutputMock;
 
 /**
- * Class RunPluginCommandHandlerTest
- *
- * @package Gitamine\Tests\Handler
+ * Class RunPluginCommandHandlerTest.
  */
 class InstallPluginCommandHandlerTest extends TestCase
 {
-    public function testShouldInstallPlugin()
+    public function testShouldInstallPlugin(): void
     {
         $gitamine = GitamineMock::create();
         $output   = OutputMock::create();

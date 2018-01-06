@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Prooph;
@@ -7,9 +8,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Class SynchronousQueryBusCompilerPass
- *
- * @package App\Prooph
+ * Class SynchronousQueryBusCompilerPass.
  */
 final class SynchronousQueryBusCompilerPass implements CompilerPassInterface
 {

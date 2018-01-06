@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -13,13 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class RunEventCommand
- *
- * @package App\Command
+ * Class RunEventCommand.
  */
 class RunEventCommand extends ContainerAwareCommand
 {
-
     protected function configure(): void
     {
         $this
@@ -40,6 +38,9 @@ class RunEventCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
+            \exec('mkdir ~/.gitamine &> /dev/null');
+            \exec('mkdir ~/.gitamine/plugins &> /dev/null');
+
             //$commandBus = $this->getContainer()->get('prooph_service_bus.gitamine_command_bus');
             $queryBus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
             $event    = $input->getArgument('hook');

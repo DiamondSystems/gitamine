@@ -1,19 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Handler;
 
 use Gitamine\Domain\Directory;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Infrastructure\InvalidSubversionCommand;
-use Gitamine\Infrastructure\InvalidSubversionDirectory;
 use Gitamine\Infrastructure\SubversionRepository;
 use Gitamine\Query\FetchAddedFilesQuery;
 
 /**
- * Class FetchAddedFilesQueryHandler
- *
- * @package Gitamine\Handler
+ * Class FetchAddedFilesQueryHandler.
  */
 class FetchAddedFilesQueryHandler
 {
@@ -35,9 +32,9 @@ class FetchAddedFilesQueryHandler
     /**
      * @param FetchAddedFilesQuery $query
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function __invoke(FetchAddedFilesQuery $query): array
     {

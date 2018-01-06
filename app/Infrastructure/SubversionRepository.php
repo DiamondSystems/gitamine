@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Infrastructure;
@@ -8,9 +9,7 @@ use Gitamine\Domain\File;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
 
 /**
- * Interface SubversionRepository
- *
- * @package Gitamine\Infrastructure
+ * Interface SubversionRepository.
  */
 interface SubversionRepository
 {
@@ -24,45 +23,45 @@ interface SubversionRepository
     /**
      * @param Directory $dir
      *
-     * @return Directory
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return Directory
      */
     public function getRootDir(Directory $dir): Directory;
 
     /**
      * @param Directory $dir
      *
-     * @return string[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return string[]
      */
     public function getNewFiles(Directory $dir): array;
 
     /**
      * @param Directory $dir
      *
-     * @return string[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return string[]
      */
     public function getUpdatedFiles(Directory $dir): array;
 
     /**
      * @param Directory $dir
      *
-     * @return string[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return string[]
      */
     public function getDeletedFiles(Directory $dir): array;
 
     /**
      * @param Directory $dir
      *
-     * @return array
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return array
      */
     public function getBranchName(Directory $dir): array;
 
@@ -71,9 +70,9 @@ interface SubversionRepository
      * @param string    $source
      * @param string    $destiny
      *
-     * @return File[]
-     *
      * @throws InvalidSubversionDirectoryException
+     *
+     * @return File[]
      */
     public function getFilesModifiedOnBranch(Directory $dir, string $source, string $destiny): array;
 }

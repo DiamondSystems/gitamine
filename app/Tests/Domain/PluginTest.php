@@ -1,23 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Tests\Domain;
 
 use Gitamine\Domain\Plugin;
-use Gitamine\Exception\PluginNotInstalledException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class PluginTest
- *
- * @package Gitamine\Tests\Domain
+ * Class PluginTest.
  */
 class PluginTest extends TestCase
 {
-    public function testShouldThrowPluginNotInstalledException()
+    public function testShouldThrowPluginNotInstalledException(): void
     {
-        $this->expectException(PluginNotInstalledException::class);
-
-        new Plugin(uniqid());
+        $plugin = new Plugin('test');
+        self::assertEquals('test', $plugin->name());
     }
 }

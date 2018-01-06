@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -6,15 +7,12 @@ namespace App\Command;
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Command\RunPluginCommand;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Prooph\ServiceBus\MessageBus;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class RunCommand
- *
- * @package App\Command
+ * Class RunCommand.
  */
 class TestCommand extends ContainerAwareCommand
 {

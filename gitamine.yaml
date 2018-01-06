@@ -7,6 +7,8 @@ gitamine:
       strict: false
     yaml-lint:
       bin: bin/yaml-lint
+    php-cs-fixer:
+      bin: bin/php-cs-fixer
     phpcs:
       bin: bin/phpcs
       phpcbf-bin: bin/phpcbf
@@ -30,4 +32,5 @@ gitamine:
     git4min3/gitamine-phpcs: phpcs
     git4min3/gitamine-phpmd: phpmd
     git4min3/gitamine-codeception: codeception
+    git4min3/gitamine-php-cs-fixer: php-cs-fixer
 

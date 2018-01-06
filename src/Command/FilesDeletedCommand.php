@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -12,9 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class FilesDeletedCommand
- *
- * @package App\Command
+ * Class FilesDeletedCommand.
  */
 class FilesDeletedCommand extends ContainerAwareCommand
 {
@@ -46,7 +45,7 @@ class FilesDeletedCommand extends ContainerAwareCommand
         try {
             $projectDir = $this->getProjectDirectory();
             $files      = $this->getDeletedFiles($projectDir);
-            sort($files);
+            \sort($files);
 
             foreach ($files as $file) {
                 $output->writeln($file);

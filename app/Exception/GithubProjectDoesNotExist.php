@@ -1,16 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
 
 use Exception;
-use Gitamine\Domain\GithubPluginName;
 use Throwable;
 
 /**
- * Class GithubProjectDoesNotExist
- *
- * @package Gitamine\Exception
+ * Class GithubProjectDoesNotExist.
  */
 class GithubProjectDoesNotExist extends Exception
 {
@@ -22,6 +20,6 @@ class GithubProjectDoesNotExist extends Exception
      */
     public function __construct(string $plugin, Throwable $previous = null)
     {
-        parent::__construct(sprintf('Plugin %s does not exist.', $plugin), 1, $previous);
+        parent::__construct(\sprintf('Plugin %s does not exist.', $plugin), 1, $previous);
     }
 }
