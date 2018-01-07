@@ -23,7 +23,7 @@ gitamine:
       #TODO configuration-file: phpunit.unit.xml
   post-checkout:
     composer:
-      nabled: false
+      enabled: false
 
   _requires:
     # plugin: alias
