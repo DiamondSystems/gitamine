@@ -15,7 +15,7 @@ class Event
     public const COMMIT_MSG         = 'commit-msg';
     public const POST_APPLYPATCH    = 'post-applypatch';
     public const POST_CHECKOUT      = 'post-checkout';
-    public const POST_COMMIT        = 'pre-commit';
+    public const POST_COMMIT        = 'post-commit';
     public const POST_MERGE         = 'post-merge';
     public const POST_RECEIVE       = 'post-receive';
     public const POST_REWRITE       = 'post-rewrite';

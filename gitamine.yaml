@@ -14,7 +14,6 @@ gitamine:
       phpcbf-bin: bin/phpcbf
       interactive: false
       standard: PSR2
-      enabled: true
       phpcbf: true
     phpmd:
       bin: bin/phpmd
@@ -22,6 +21,9 @@ gitamine:
       bin: bin/phpunit
       min-coverage: 100
       #TODO configuration-file: phpunit.unit.xml
+  post-checkout:
+    composer:
+      nabled: false
 
   _requires:
     # plugin: alias
