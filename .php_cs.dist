@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $result = [];
-exec('gitamine f:c | grep -E "\\.php$" | tr \'\r\n\' \',\'', $result);
+exec(__DIR__ . '/gitamine f:c | grep -E "\\.php$" | tr \'\r\n\' \',\'', $result);
 
 $finder = PhpCsFixer\Finder::create()
                            ->in(['src', 'app']);
