@@ -11,13 +11,15 @@ use Gitamine\Domain\GithubPluginName;
 use Gitamine\Domain\GithubPluginVersion;
 use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
+use Gitamine\Domain\Verbose;
 use Gitamine\Infrastructure\GitamineConfig;
 use Hamcrest\Matchers;
 use Mockery;
 use Mockery\MockInterface;
 
 /**
- *  @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * Class GitamineMock
  */
@@ -68,9 +70,10 @@ class GitamineMock
     /**
      * @param string $plugin
      * @param string $event
+     * @param int    $verbose
      * @param bool   $return
      */
-    public function shouldRunPlugin(string $plugin, string $event, bool $return): void
+    public function shouldRunPlugin(string $plugin, string $event, int $verbose, bool $return): void
     {
         $thePlugin = Matchers::equalTo(new GithubPlugin(
             new GithubPluginName($plugin),
@@ -78,9 +81,11 @@ class GitamineMock
         ));
         $theEvent   = Matchers::equalTo(new Event($event));
         $theOptions = Matchers::anInstanceOf(PluginOptions::class);
+        $theLevel   = Matchers::equalTo(new Verbose($verbose));
+
         $this->gitamine->shouldReceive('runPlugin')
                        ->once()
-                       ->with($thePlugin, $theEvent, $theOptions, null)
+                       ->with($thePlugin, $theEvent, $theOptions, $theLevel, '')
                        ->andReturn($return);
     }
 

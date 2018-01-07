@@ -11,6 +11,7 @@ use Gitamine\Domain\Directory;
 use Gitamine\Domain\Event;
 use Gitamine\Domain\GithubPlugin;
 use Gitamine\Domain\Plugin;
+use Gitamine\Domain\Verbose;
 use Gitamine\Exception\PluginExecutionFailedException;
 use Gitamine\Infrastructure\GitamineConfig;
 use Gitamine\Infrastructure\Output;
@@ -57,9 +58,12 @@ class RunPluginCommandHandler
      */
     public function __invoke(RunPluginCommand $query): void
     {
-        $dir    = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
-        $plugin = new Plugin($query->plugin());
-        $event  = new Event($query->event());
+        $dir     = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
+        $plugin  = new Plugin($query->plugin());
+        $event   = new Event($query->event());
+        $verbose = new Verbose(
+            $this->gitamine->getConfiguration($this->gitamine->getProjectFolder())['_options']['verbose']
+        );
 
         $options = $this->gitamine->getOptionsForPlugin($dir, $plugin, $event);
         $result  = '';
@@ -76,18 +80,36 @@ class RunPluginCommandHandler
             }
 
             // Running part
-            $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
+            if (Verbose::FULL === $verbose->level()) {
+                $this->output->println(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
+            } else {
+                $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
+            }
 
-            $success = $this->gitamine->runPlugin($githubPlugin, $event, $options, $result);
+            $success = $this->gitamine->runPlugin($githubPlugin, $event, $options, $verbose, $result);
 
             if (!$success) {
-                $this->output->println("\t<fail>✘</fail>");
-                $this->output->println($result);
+                if (Verbose::FULL === $verbose->level()) {
+                    $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
+                    $this->output->println("\t<fail>✘</fail>");
+                } elseif (Verbose::ONLY_ERRORS === $verbose->level()) {
+                    $this->output->println("\t<fail>✘</fail>");
+                    $this->output->println($result);
+                } else {
+                    $this->output->println("\t<fail>✘</fail>");
+                }
 
                 throw new PluginExecutionFailedException('Failed', 2);
             }
 
-            $this->output->println("\t<success>✔</success>");
+            if (Verbose::FULL === $verbose->level()) {
+                $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
+                $this->output->println("\t<success>✔</success>");
+            } elseif (Verbose::ONLY_ERRORS === $verbose->level()) {
+                $this->output->println("\t<success>✔</success>");
+            } else {
+                $this->output->println("\t<success>✔</success>");
+            }
         }
     }
 }
