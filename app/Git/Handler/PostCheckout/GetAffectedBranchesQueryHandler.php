@@ -7,9 +7,7 @@ namespace Gitamine\Git\Handler\PostCheckout;
 use Gitamine\Git\Infrastructure\PostCheckout;
 
 /**
- * Class GetAffectedBranchesQueryHandler
- *
- * @package Gitamine\Git\Handler\PostCheckout
+ * Class GetAffectedBranchesQueryHandler.
  */
 class GetAffectedBranchesQueryHandler
 {

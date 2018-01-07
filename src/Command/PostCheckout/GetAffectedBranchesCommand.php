@@ -13,9 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GetAffectedBranchesCommand
- *
- * @package App\Command\PostCheckout
+ * Class GetAffectedBranchesCommand.
  */
 final class GetAffectedBranchesCommand extends ContainerAwareCommand
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Exception;
@@ -8,9 +9,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class InvalidFileException
- *
- * @package Gitamine\Git\Exception
+ * Class InvalidFileException.
  */
 class InvalidFileException extends RuntimeException
 {
