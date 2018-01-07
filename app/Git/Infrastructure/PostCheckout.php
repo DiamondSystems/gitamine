@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Infrastructure;
 
+use Generator;
 use Gitamine\Git\Domain\Branch;
+use Gitamine\Git\Domain\File;
 
 /**
- * Interface PostCheckout
- *
- * @package Gitamine\Git\Infrastructure
+ * Interface PostCheckout.
  */
 interface PostCheckout
 {
@@ -18,9 +19,10 @@ interface PostCheckout
     public function getAffectedBranches(): array;
 
     /**
-     * @param Branch|null $source
+     * @param Branch $source
+     * @param Branch $destiny
      *
-     * @return mixed
+     * @return File[]|Generator
      */
-    public function getAffectedFiles(?Branch $source = null);
+    public function getAffectedFiles(Branch $source = null, Branch $destiny): Generator;
 }

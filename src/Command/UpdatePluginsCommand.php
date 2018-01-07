@@ -37,7 +37,7 @@ class UpdatePluginsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        exec('
+        \exec('
                 cd ~/.gitamine/plugins/git4min3 ; 
                 find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
             ');

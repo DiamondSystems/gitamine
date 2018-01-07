@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gitamine\Domain;
+namespace Gitamine\Git\Domain;
 
-use Gitamine\Exception\InvalidFileException;
+use Gitamine\Git\Exception\InvalidFileException;
 
 /**
  * Class Directory.
- *
- * @deprecated
  */
 class File
 {
@@ -25,11 +23,11 @@ class File
      */
     public function __construct(string $file)
     {
-        if (!\is_file($file)) {
-            throw new InvalidFileException("Invalid file '${file}'", 1);
-        }
-
         $this->file = $file;
+
+        if (!\is_file($file)) {
+            throw new InvalidFileException($this);
+        }
     }
 
     /**
@@ -43,7 +41,7 @@ class File
     /**
      * @return string
      */
-    public function name(): string
+    public function filename(): string
     {
         return \basename($this->file());
     }

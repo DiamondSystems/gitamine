@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Gitamine\Git\Query\PostCheckout;
 
 /**
- * Class GetAffectedFilesQuery
- *
- * @package Gitamine\Git\PostCheckout\Query
+ * Class GetAffectedFilesQuery.
  */
 class GetAffectedFilesQuery
 {
@@ -17,13 +15,20 @@ class GetAffectedFilesQuery
     private $source;
 
     /**
+     * @var string
+     */
+    private $filter;
+
+    /**
      * GetAffectedFilesQuery constructor.
      *
      * @param null|string $source
+     * @param string      $filter
      */
-    public function __construct(?string $source = null)
+    public function __construct(?string $source = null, string $filter = '/*/')
     {
         $this->source = $source;
+        $this->filter = $filter;
     }
 
     /**
@@ -32,5 +37,13 @@ class GetAffectedFilesQuery
     public function source(): ?string
     {
         return $this->source;
+    }
+
+    /**
+     * @return string
+     */
+    public function filter(): string
+    {
+        return $this->filter;
     }
 }
