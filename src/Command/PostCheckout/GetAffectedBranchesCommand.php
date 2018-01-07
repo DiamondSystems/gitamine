@@ -6,6 +6,7 @@ namespace App\Command\PostCheckout;
 
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
+use Gitamine\Git\Query\PostCheckout\GetAffectedBranchesQuery;
 use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,19 +26,8 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
     protected function configure(): void
     {
         $this
-            ->setName('post-commit:files')
-            ->setDescription('Returns a list of files that have differied from the given branch')
-            ->addArgument(
-                'source-branch',
-                InputArgument::OPTIONAL,
-                'Reference branch'
-            )
-            ->addArgument(
-                'filter',
-                InputArgument::OPTIONAL,
-                'Reference branch',
-                '/*/'
-            );
+            ->setName('git:post-checkout:branches')
+            ->setDescription('Returns the source and destiny branches on a post-checkout');
     }
 
     /**
@@ -51,16 +41,12 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
-        $branch    = $input->getArgument('source-branch');
-        $filter    = $input->getArgument('filter');
 
         try {
             /** @var string[] $files */
-            $files = $this->bus->dispatch(new GetAffectedFilesQuery($branch, $filter));
+            [$source, $destination] = $this->bus->dispatch(new GetAffectedBranchesQuery());
 
-            foreach ($files as $file) {
-                $output->writeln($file);
-            }
+            $output->writeln("{$source},{$destination}");
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 

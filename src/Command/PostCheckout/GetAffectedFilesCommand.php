@@ -25,7 +25,7 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
     protected function configure(): void
     {
         $this
-            ->setName('post-commit:files')
+            ->setName('git:post-checkout:files')
             ->setDescription('Returns a list of files that have differied from the given branch')
             ->addArgument(
                 'source-branch',

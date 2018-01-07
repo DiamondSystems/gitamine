@@ -24,6 +24,7 @@
 
         <testsuite name="Unitary Test Suite">
             <directory>app/Tests</directory>
+            <directory>app/*/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -33,6 +34,10 @@
             <directory>./app/Domain/</directory>
             <directory>./app/Handler/</directory>
             <directory>./app/Query/</directory>
+            <directory>./app/*/Command/</directory>
+            <directory>./app/*/Domain/</directory>
+            <directory>./app/*/Handler/</directory>
+            <directory>./app/*/Query/</directory>
         </whitelist>
     </filter>
 
