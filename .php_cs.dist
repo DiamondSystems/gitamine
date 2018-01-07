@@ -5,8 +5,7 @@ declare(strict_types=1);
 $result = [];
 exec(__DIR__ . '/gitamine f:c | grep -E "\\.php$" | tr \'\r\n\' \',\'', $result);
 
-$finder = PhpCsFixer\Finder::create()
-                           ->in(['src', 'app']);
+$finder = PhpCsFixer\Finder::create();
 
 if (count($result) === 0) {
     exit(0);
