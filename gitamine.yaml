@@ -21,8 +21,10 @@ gitamine:
       min-coverage: 100
 
   post-checkout:
-    composer:
-      enabled: false
+    composer: ~
+
+  post-merge:
+    composer: ~
 
   _requires:
     git4min3/gitamine-shellcheck: shellcheck
