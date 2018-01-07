@@ -89,6 +89,7 @@ class YamlGitamineConfig implements GitamineConfig
         // passthru
         \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
         $output = \implode("\n", $out);
+
         //\passthru($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $status);
 
         return 0 === $status;
@@ -159,7 +160,10 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getPluginExecutableFile(GithubPlugin $githubPlugin): File
     {
-        return $this->getGitamineFolder()->openDir('plugins')->openDir($githubPlugin->name()->name())->openFile('run');
+        return $this->getGitamineFolder()
+                    ->openDir('plugins')
+                    ->openDir($githubPlugin->name()->name())
+                    ->openFile('run.sh');
     }
 
     /**

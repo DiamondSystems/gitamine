@@ -1,7 +1,6 @@
 gitamine:
 
   pre-commit:
-    #test: ~
     shellcheck: ~
     composer:
       strict: false
@@ -20,13 +19,12 @@ gitamine:
     phpunit:
       bin: bin/phpunit
       min-coverage: 100
-      #TODO configuration-file: phpunit.unit.xml
+
   post-checkout:
     composer:
       enabled: false
 
   _requires:
-    # plugin: alias
     git4min3/gitamine-shellcheck: shellcheck
     git4min3/gitamine-composer: composer
     git4min3/gitamine-yaml-lint: yaml-lint

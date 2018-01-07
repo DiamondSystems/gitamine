@@ -37,6 +37,10 @@ class UpdatePluginsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        exec('
+                cd ~/.gitamine/plugins/git4min3 ; 
+                find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
+            ');
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
 
         return 1;
