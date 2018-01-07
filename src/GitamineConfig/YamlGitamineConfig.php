@@ -12,6 +12,7 @@ use Gitamine\Domain\GithubPluginName;
 use Gitamine\Domain\GithubPluginVersion;
 use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
+use Gitamine\Domain\Verbose;
 use Gitamine\Exception\GithubProjectDoesNotExist;
 use Gitamine\Exception\InvalidDirException;
 use Gitamine\Exception\MissingConfigurationFileException;
@@ -53,8 +54,10 @@ class YamlGitamineConfig implements GitamineConfig
         if (!$this->config) {
             $config = \Symfony\Component\Yaml\Yaml::parseFile($this->getConfigurationFile($directory)->file());
 
-            $this->config              = $config['gitamine'];
-            $this->config['_requires'] = $this->config['_requires'] ?? [];
+            $this->config                        = $config['gitamine'];
+            $this->config['_requires']           = $this->config['_requires']           ?? [];
+            $this->config['_options']            = $this->config['_options']            ?? [];
+            $this->config['_options']['verbose'] = $this->config['_options']['verbose'] ?? Verbose::ONLY_ERRORS;
             foreach (Event::VALID_EVENTS as $event) {
                 $this->config[$event] = $this->config[$event] ?? [];
             }
@@ -67,6 +70,7 @@ class YamlGitamineConfig implements GitamineConfig
      * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
+     * @param Verbose       $verbose
      * @param null|string   $output
      *
      * @return bool
@@ -75,6 +79,7 @@ class YamlGitamineConfig implements GitamineConfig
         GithubPlugin $githubPlugin,
         Event $event,
         PluginOptions $pluginOptions,
+        Verbose $verbose,
         ?string &$output
     ): bool {
         $status = 0;
@@ -86,11 +91,16 @@ class YamlGitamineConfig implements GitamineConfig
             $params .= \sprintf(' --%s=%s', $key, $value);
         }
 
-        // passthru
-        \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
-        $output = \implode("\n", $out);
-
-        //\passthru($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $status);
+        if (Verbose::ONLY_ERRORS === $verbose->level()) {
+            // passthru
+            \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
+            $output = \implode("\n", $out);
+        } elseif (Verbose::FULL === $verbose->level()) {
+            \passthru($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $status);
+            $output = '';
+        } else {
+            \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
+        }
 
         return 0 === $status;
     }
@@ -103,12 +113,12 @@ class YamlGitamineConfig implements GitamineConfig
      */
     public function getPluginList(Directory $directory, Event $event): array
     {
-        $config            = $this->getConfiguration($directory);
-        $config['plugins'] = $config[$event->event()] ?? [];
+        $config                  = $this->getConfiguration($directory);
+        $config[$event->event()] = $config[$event->event()] ?? [];
 
         $plugins = [];
 
-        foreach (\array_keys($config['plugins']) as $plugin) {
+        foreach (\array_keys($config[$event->event()]) as $plugin) {
             $plugins[] = new Plugin($plugin);
         }
 

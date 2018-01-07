@@ -10,6 +10,7 @@ use Gitamine\Domain\File;
 use Gitamine\Domain\GithubPlugin;
 use Gitamine\Domain\Plugin;
 use Gitamine\Domain\PluginOptions;
+use Gitamine\Domain\Verbose;
 
 /**
  * Interface GitamineConfig.
@@ -34,6 +35,7 @@ interface GitamineConfig
      * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
+     * @param Verbose       $verbose
      * @param null|string   $output
      *
      * @return bool
@@ -42,6 +44,7 @@ interface GitamineConfig
         GithubPlugin $githubPlugin,
         Event $event,
         PluginOptions $pluginOptions,
+        Verbose $verbose,
         ?string &$output
     ): bool;
 
