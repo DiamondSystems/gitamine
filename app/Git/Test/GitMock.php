@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Test;
@@ -8,9 +9,7 @@ use Mockery;
 use Mockery\MockInterface;
 
 /**
- * Class GitMock
- *
- * @package Gitamine\Git\Test
+ * Class GitMock.
  */
 class GitMock
 {
@@ -31,5 +30,4 @@ class GitMock
     {
         return $this->git;
     }
-
 }

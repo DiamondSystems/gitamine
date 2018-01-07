@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Tests\Handler\PostCheckout;
@@ -8,11 +9,9 @@ use Gitamine\Git\Handler\PostCheckout\GetAffectedBranchesQueryHandler;
 use Gitamine\Git\Test\PostCheckoutMock;
 
 /**
- * Class GetAffectedBranchesQueryHandlerTest
+ * Class GetAffectedBranchesQueryHandlerTest.
  *
- * @package Gitamine\Git\Tests\Handler\PostCheckout
- *
- *          @covers \Gitamine\Git\Handler\PostCheckout\GetAffectedBranchesQueryHandler
+ * @covers \Gitamine\Git\Handler\PostCheckout\GetAffectedBranchesQueryHandler
  */
 class GetAffectedBranchesQueryHandlerTest extends TestCase
 {

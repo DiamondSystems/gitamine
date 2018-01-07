@@ -7,9 +7,7 @@ namespace App\Command\PostCheckout;
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
 use Gitamine\Git\Query\PostCheckout\GetAffectedBranchesQuery;
-use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -43,7 +41,7 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
 
         try {
-            /** @var string[] $files */
+            /* @var string[] $files */
             [$source, $destination] = $this->bus->dispatch(new GetAffectedBranchesQuery());
 
             $output->writeln("{$source},{$destination}");

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Test;
@@ -12,9 +13,7 @@ use Mockery;
 use Mockery\MockInterface;
 
 /**
- * Class GitMock
- *
- * @package Gitamine\Git\Test
+ * Class GitMock.
  */
 class PostCheckoutMock
 {
@@ -57,10 +56,10 @@ class PostCheckoutMock
     {
         $this->postCheckout->shouldReceive('getAffectedFiles')
                            ->once()
-                           ->with(
-                               Matchers::equalTo(new Branch($source)),
-                               Matchers::equalTo(new Branch($destiny))
-                           )
+                        ->with(
+                            Matchers::equalTo(new Branch($source)),
+                            Matchers::equalTo(new Branch($destiny))
+                        )
                            ->andReturn($this->builFiles($files));
     }
 

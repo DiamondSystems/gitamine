@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Tests\Handler\PostCheckout;
@@ -9,9 +10,7 @@ use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
 use Gitamine\Git\Test\PostCheckoutMock;
 
 /**
- * Class GetAffectedFilesQueryHandlerTest
- *
- * @package Gitamine\Git\Tests\Handler\PostCheckout
+ * Class GetAffectedFilesQueryHandlerTest.
  *
  * @covers \Gitamine\Git\Handler\PostCheckout\GetAffectedFilesQueryHandler
  */
@@ -30,7 +29,7 @@ class GetAffectedFilesQueryHandlerTest extends TestCase
 
         self::assertEquals(
             $files,
-            iterator_to_array($result)
+            \iterator_to_array($result)
         );
     }
 }
