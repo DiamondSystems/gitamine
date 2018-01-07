@@ -25,7 +25,7 @@ class GetAffectedFilesQuery
      * @param null|string $source
      * @param string      $filter
      */
-    public function __construct(?string $source = null, string $filter = '/.*/')
+    public function __construct(?string $source = null, string $filter = '.*')
     {
         $this->source = $source;
         $this->filter = $filter;

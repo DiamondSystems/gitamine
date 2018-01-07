@@ -22,13 +22,47 @@ class GetAffectedFilesQueryHandlerTest extends TestCase
 
         $postCheckout = new PostCheckoutMock();
         $postCheckout->mockGetAffectedBranches('master', 'develop');
-        $postCheckout->mockGetAffectedFiles('master', 'develop', $files);
+        $postCheckout->mockGetAffectedFiles('feature', 'develop', $files);
 
         $handler = new GetAffectedFilesQueryHandler($postCheckout->postCheckout());
-        $result  = $handler(new GetAffectedFilesQuery('master'));
+        $result  = $handler(new GetAffectedFilesQuery('feature'));
 
         self::assertEquals(
             $files,
+            \iterator_to_array($result)
+        );
+    }
+
+    public function testShouldGetAffectedBranchesWithoutGivenOriginBranch(): void
+    {
+        $files = [$this->file('file.txt')];
+
+        $postCheckout = new PostCheckoutMock();
+        $postCheckout->mockGetAffectedBranches('master', 'develop');
+        $postCheckout->mockGetAffectedFiles('master', 'develop', $files);
+
+        $handler = new GetAffectedFilesQueryHandler($postCheckout->postCheckout());
+        $result  = $handler(new GetAffectedFilesQuery());
+
+        self::assertEquals(
+            $files,
+            \iterator_to_array($result)
+        );
+    }
+
+    public function testShouldGetAffectedBranchesWithFilters(): void
+    {
+        $files = [$this->file('file.txt'), $this->file('file2.txt')];
+
+        $postCheckout = new PostCheckoutMock();
+        $postCheckout->mockGetAffectedBranches('master', 'develop');
+        $postCheckout->mockGetAffectedFiles('master', 'develop', $files);
+
+        $handler = new GetAffectedFilesQueryHandler($postCheckout->postCheckout());
+        $result  = $handler(new GetAffectedFilesQuery(null, 'file2.txt'));
+
+        self::assertEquals(
+            [$files[1]],
             \iterator_to_array($result)
         );
     }

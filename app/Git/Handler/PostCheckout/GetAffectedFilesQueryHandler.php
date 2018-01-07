@@ -45,7 +45,7 @@ class GetAffectedFilesQueryHandler
         $files = $this->postCheckout->getAffectedFiles($source, $destiny);
 
         foreach ($files as $file) {
-            if (\preg_match($query->filter(), $file->file())) {
+            if (\preg_match('/' . $query->filter() . '/', $file->file())) {
                 yield $file->file();
             }
         }
