@@ -12,6 +12,8 @@ use Gitamine\Test\VersionControlMock;
 
 /**
  * Class FetchDeletedFilesQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class FetchDeletedFilesQueryHandlerTest extends TestCase
 {

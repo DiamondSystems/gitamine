@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class DirectoryTest.
+ *
+ * @coversNothing
  */
 class DirectoryTest extends TestCase
 {

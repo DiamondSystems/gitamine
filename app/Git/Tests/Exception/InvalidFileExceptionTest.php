@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Tests\Exception;
@@ -8,13 +9,13 @@ use Gitamine\Git\Domain\File;
 use Gitamine\Git\Exception\InvalidFileException;
 
 /**
- * Class InvalidFileExceptionTest
+ * Class InvalidFileExceptionTest.
  *
  * @covers \Gitamine\Git\Exception\InvalidFileException
  */
 class InvalidFileExceptionTest extends TestCase
 {
-    public function testShouldHaveCorrectCode()
+    public function testShouldHaveCorrectCode(): void
     {
         $exception = new InvalidFileException(new File($this->file('file.txt')));
         self::assertEquals(1, $exception->getCode());

@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class PluginTest.
+ *
+ * @coversNothing
  */
 class PluginTest extends TestCase
 {

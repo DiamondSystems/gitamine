@@ -12,6 +12,8 @@ use Gitamine\Test\VersionControlMock;
 
 /**
  * Class FetchModifiedFilesQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class FetchModifiedFilesQueryHandlerTest extends TestCase
 {

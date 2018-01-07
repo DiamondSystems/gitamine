@@ -13,6 +13,8 @@ use Gitamine\Test\QueryBusMock;
 
 /**
  * Class GetConfiguratedPluginsQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class GetConfiguratedPluginsQueryHandlerTest extends TestCase
 {

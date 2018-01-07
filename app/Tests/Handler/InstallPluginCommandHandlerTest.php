@@ -12,6 +12,8 @@ use Gitamine\Test\OutputMock;
 
 /**
  * Class RunPluginCommandHandlerTest.
+ *
+ * @coversNothing
  */
 class InstallPluginCommandHandlerTest extends TestCase
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Tests\Query;
@@ -7,13 +8,13 @@ use Gitamine\Common\Test\TestCase;
 use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
 
 /**
- * Class GetAffectedFilesQueryTest
+ * Class GetAffectedFilesQueryTest.
  *
  * @covers \Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery
  */
 class GetAffectedFilesQueryTest extends TestCase
 {
-    public function testShouldHaveValidConstructors()
+    public function testShouldHaveValidConstructors(): void
     {
         $query = new GetAffectedFilesQuery();
         self::assertNull($query->source());

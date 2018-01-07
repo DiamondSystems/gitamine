@@ -11,6 +11,8 @@ use Gitamine\Test\GitamineMock;
 
 /**
  * Class GetProjectDirectoryQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class GetProjectDirectoryQueryHandlerTest extends TestCase
 {

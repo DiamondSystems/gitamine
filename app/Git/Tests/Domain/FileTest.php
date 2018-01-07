@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Tests\Domain;
@@ -8,20 +9,20 @@ use Gitamine\Git\Domain\File;
 use Gitamine\Git\Exception\InvalidFileException;
 
 /**
- * Class FileTest
+ * Class FileTest.
  *
  * @covers \Gitamine\Git\Domain\File
  */
 class FileTest extends TestCase
 {
-    public function testShouldBeValidFile()
+    public function testShouldBeValidFile(): void
     {
         $file = new File($this->file('file.txt'));
         self::assertEquals($this->file('file.txt'), $file->file());
         self::assertEquals('file.txt', $file->filename());
     }
 
-    public function testShouldThrowInvalidFileException()
+    public function testShouldThrowInvalidFileException(): void
     {
         $this->expectException(InvalidFileException::class);
 

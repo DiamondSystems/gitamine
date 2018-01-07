@@ -13,6 +13,8 @@ use Gitamine\Test\VersionControlMock;
 
 /**
  * Class GetConfiguratedPluginsQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class GetGitamineConfigurationQueryHandlerTest extends TestCase
 {

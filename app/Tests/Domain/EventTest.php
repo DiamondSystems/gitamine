@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class EventTest.
+ *
+ * @coversNothing
  */
 class EventTest extends TestCase
 {

@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class GithubPluginTest.
+ *
+ * @coversNothing
  */
 class GithubPluginTest extends TestCase
 {

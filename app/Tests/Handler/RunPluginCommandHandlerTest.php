@@ -16,6 +16,8 @@ use Gitamine\Test\QueryBusMock;
 
 /**
  * Class RunPluginCommandHandlerTest.
+ *
+ * @coversNothing
  */
 class RunPluginCommandHandlerTest extends TestCase
 {

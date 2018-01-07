@@ -20,7 +20,7 @@ gitamine:
   pre-push:
     phpunit:
       bin: bin/phpunit
-      min-coverage: 100
+      min-coverage: 0
 
   post-checkout:
     composer: ~
@@ -39,6 +39,6 @@ gitamine:
     git4min3/gitamine-php-cs-fixer: php-cs-fixer
 
   _options:
-    verbose: 1 # full : 2, none : 0, [onerror : 1]
+    verbose: 2 # full : 2, none : 0, [onerror : 1]
 
 

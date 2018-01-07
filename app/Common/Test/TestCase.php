@@ -9,6 +9,10 @@ use PHPUnit\Framework\TestCase as PhpunitTestCase;
 
 /**
  * Class TestCase.
+ *
+ * @SuppressWarnings(PHPMD.NumberOfChildren)
+ *
+ * @coversNothing
  */
 class TestCase extends PhpunitTestCase
 {
