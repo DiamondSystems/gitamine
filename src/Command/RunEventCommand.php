@@ -24,7 +24,8 @@ class RunEventCommand extends ContainerAwareCommand
             ->setName('run')
             ->setDescription('run hook')
             ->setHelp('run hook')
-            ->addArgument('hook', InputArgument::REQUIRED, 'Which hook to run');
+            ->addArgument('hook', InputArgument::REQUIRED, 'Which hook to run')
+            ->addArgument('params', InputArgument::OPTIONAL, 'params to send', '');
     }
 
     /**
@@ -44,13 +45,14 @@ class RunEventCommand extends ContainerAwareCommand
             //$commandBus = $this->getContainer()->get('prooph_service_bus.gitamine_command_bus');
             $queryBus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
             $event    = $input->getArgument('hook');
+            $params   = $input->getArgument('params');
 
             /** @var string[] $plugins */
             $plugins = $queryBus->dispatch(new GetConfiguratedPluginsQuery($event));
 
             foreach ($plugins as $plugin) {
                 try {
-                    $queryBus->dispatch(new RunPluginCommand($plugin, $event));
+                    $queryBus->dispatch(new RunPluginCommand($plugin, $event, $params));
                 } catch (PluginExecutionFailedException $e) {
                     return $e->getCode();
                 }

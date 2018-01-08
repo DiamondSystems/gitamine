@@ -20,15 +20,22 @@ class RunPluginCommand
     private $event;
 
     /**
+     * @var string
+     */
+    private $params;
+
+    /**
      * RunPluginCommand constructor.
      *
      * @param string $plugin
      * @param string $event
+     * @param string $params
      */
-    public function __construct(string $plugin, string $event)
+    public function __construct(string $plugin, string $event, ?string $params = '')
     {
         $this->plugin = $plugin;
         $this->event  = $event;
+        $this->params = $params;
     }
 
     /**
@@ -45,5 +52,13 @@ class RunPluginCommand
     public function event(): string
     {
         return $this->event;
+    }
+
+    /**
+     * @return string
+     */
+    public function params(): string
+    {
+        return $this->params;
     }
 }

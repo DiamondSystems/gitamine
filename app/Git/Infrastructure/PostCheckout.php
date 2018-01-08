@@ -22,7 +22,17 @@ interface PostCheckout
      * @param Branch $source
      * @param Branch $destiny
      *
+     * @param bool   $added
+     * @param bool   $modified
+     * @param bool   $deleted
+     *
      * @return File[]|Generator
      */
-    public function getAffectedFiles(Branch $source = null, Branch $destiny): Generator;
+    public function getFiles(
+        Branch $source,
+        Branch $destiny,
+        bool $added = true,
+        bool $modified = true,
+        bool $deleted = false
+    ): Generator;
 }

@@ -35,6 +35,7 @@ interface GitamineConfig
      * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
+     * @param string        $params
      * @param Verbose       $verbose
      * @param null|string   $output
      *
@@ -44,6 +45,7 @@ interface GitamineConfig
         GithubPlugin $githubPlugin,
         Event $event,
         PluginOptions $pluginOptions,
+        string $params,
         Verbose $verbose,
         ?string &$output
     ): bool;

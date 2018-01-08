@@ -70,6 +70,7 @@ class YamlGitamineConfig implements GitamineConfig
      * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
+     * @param string       $args
      * @param Verbose       $verbose
      * @param null|string   $output
      *
@@ -79,6 +80,7 @@ class YamlGitamineConfig implements GitamineConfig
         GithubPlugin $githubPlugin,
         Event $event,
         PluginOptions $pluginOptions,
+        string $args,
         Verbose $verbose,
         ?string &$output
     ): bool {
@@ -93,13 +95,13 @@ class YamlGitamineConfig implements GitamineConfig
 
         if (Verbose::ONLY_ERRORS === $verbose->level()) {
             // passthru
-            \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
+            \exec($this->getPluginExecutableFile($githubPlugin)->file() . " $args $params " . ' 2>&1', $out, $status);
             $output = \implode("\n", $out);
         } elseif (Verbose::FULL === $verbose->level()) {
-            \passthru($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $status);
+            \passthru($this->getPluginExecutableFile($githubPlugin)->file() . " $args $params " . ' 2>&1', $status);
             $output = '';
         } else {
-            \exec($this->getPluginExecutableFile($githubPlugin)->file() . $params . ' 2>&1', $out, $status);
+            \exec($this->getPluginExecutableFile($githubPlugin)->file() . " $args $params " . ' 2>&1', $out, $status);
         }
 
         return 0 === $status;

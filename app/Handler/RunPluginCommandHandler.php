@@ -61,6 +61,8 @@ class RunPluginCommandHandler
         $dir     = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
         $plugin  = new Plugin($query->plugin());
         $event   = new Event($query->event());
+        $params  = $query->params();
+
         $verbose = new Verbose(
             $this->gitamine->getConfiguration($this->gitamine->getProjectFolder())['_options']['verbose']
         );
@@ -86,7 +88,7 @@ class RunPluginCommandHandler
                 $this->output->print(\str_pad("<info>Running</info> {$plugin->name()}:", 36));
             }
 
-            $success = $this->gitamine->runPlugin($githubPlugin, $event, $options, $verbose, $result);
+            $success = $this->gitamine->runPlugin($githubPlugin, $event, $options, $params, $verbose, $result);
 
             if (!$success) {
                 if (Verbose::FULL === $verbose->level()) {
