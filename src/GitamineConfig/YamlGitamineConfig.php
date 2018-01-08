@@ -119,7 +119,6 @@ class YamlGitamineConfig implements GitamineConfig
         $config[$event->event()] = $config[$event->event()] ?? [];
 
         $plugins = [];
-dump($event);
         foreach (\array_keys($config[$event->event()]) as $plugin) {
             $plugins[] = new Plugin($plugin);
         }

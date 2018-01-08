@@ -46,10 +46,10 @@ class InitCommand extends ContainerAwareCommand
         \exec('mkdir ~/.gitamine/plugins 2> /dev/null');
 
         $bin     = \dirname(__DIR__, 2) . '/gitamine';
-        $command = 'eval /home/xgc1986/Projects/gitamine/gitamine run post-checkout \\\\\"\\$*\\\\\"';
 
         // TODO Initialize project hooks or update
         foreach (Event::VALID_EVENTS as $event) {
+            $command = 'eval ' . $bin . ' run ' . $event . ' \\\\\"\\$*\\\\\"';
             \system("echo $command > {$dir}/.git/hooks/{$event}");
             \system("chmod +x {$dir}/.git/hooks/{$event}");
         }
