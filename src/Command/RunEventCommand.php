@@ -51,6 +51,7 @@ class RunEventCommand extends ContainerAwareCommand
             $plugins = $queryBus->dispatch(new GetConfiguratedPluginsQuery($event));
 
             foreach ($plugins as $plugin) {
+                dump($plugin);
                 try {
                     $queryBus->dispatch(new RunPluginCommand($plugin, $event, $params));
                 } catch (PluginExecutionFailedException $e) {
