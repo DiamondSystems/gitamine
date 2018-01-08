@@ -42,16 +42,14 @@ class InitCommand extends ContainerAwareCommand
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
         $dir       = $this->bus->dispatch(new GetProjectDirectoryQuery());
 
-        \exec('mkdir ~/.gitamine &> /dev/null');
-        \exec('mkdir ~/.gitamine/plugins &> /dev/null');
+        \exec('mkdir ~/.gitamine 2> /dev/null');
+        \exec('mkdir ~/.gitamine/plugins 2> /dev/null');
 
-        $bin = 'bin/gitamine';
-        if (false !== \mb_strpos(__DIR__, '.composer')) {
-            $bin = 'gitamine';
-        }
+        $bin = \dirname(__DIR__, 2) . '/gitamine';
+
         // TODO Initialize project hooks or update
         foreach (Event::VALID_EVENTS as $event) {
-            \system("echo '${bin} run {$event}' > {$dir}/.git/hooks/{$event}");
+            \system("echo '{$bin} run {$event}' > {$dir}/.git/hooks/{$event}");
             \system("chmod +x {$dir}/.git/hooks/{$event}");
         }
 
