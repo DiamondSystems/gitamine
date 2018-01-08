@@ -12,6 +12,8 @@ use Gitamine\Test\VersionControlMock;
 
 /**
  * Class FetchAddedFilesQueryHandlerTest.
+ *
+ * @coversNothing
  */
 class FetchAddedFilesQueryHandlerTest extends TestCase
 {
@@ -20,7 +22,7 @@ class FetchAddedFilesQueryHandlerTest extends TestCase
      */
     public function testShouldFetchAddedFiles(): void
     {
-        $dir   = '/';
+        $dir = '/';
         $files = ['/test.txt'];
 
         $repo = VersionControlMock::create();
