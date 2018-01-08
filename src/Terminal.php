@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App;
 
 /**
- * Class Terminal
- * @package App
+ * Class Terminal.
  */
 class Terminal
 {
@@ -21,11 +21,11 @@ class Terminal
      */
     public function __construct(string $dir = null)
     {
-        $this->dir = $dir ?? getcwd();
+        $this->dir = $dir ?? \getcwd();
     }
 
     /**
-     * Returns an array with the status in the first position and the output in the second
+     * Returns an array with the status in the first position and the output in the second.
      *
      * @param string $command
      * @param bool   $outputWithErrors
@@ -38,11 +38,11 @@ class Terminal
         $status = 0;
         $output = [];
 
-        exec("cd {$this->dir} ; {$command} {$pipe}", $output, $status);
+        \exec("cd {$this->dir} ; {$command} {$pipe}", $output, $status);
 
         return [
             $status,
-            implode("\n", $output)
+            \implode("\n", $output)
         ];
     }
 }

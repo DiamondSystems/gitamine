@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Git\PostCheckout;
@@ -10,8 +11,7 @@ use Gitamine\Git\Domain\File;
 use Gitamine\Git\Infrastructure\PostCheckout as BasePostCheckout;
 
 /**
- * Class PostCheckout
- * @package App\Git\PostCheckout
+ * Class PostCheckout.
  */
 class PostCheckout implements BasePostCheckout
 {
@@ -34,8 +34,9 @@ class PostCheckout implements BasePostCheckout
 
         [$status, $output] = $this->terminal->run($command);
 
-        if ($status === 0) {
-            [$source, $destination] = explode(PHP_EOL, $output);
+        if (0 === $status) {
+            [$source, $destination] = \explode(PHP_EOL, $output);
+
             return [
                 new Branch($source),
                 new Branch($destination)
@@ -48,7 +49,6 @@ class PostCheckout implements BasePostCheckout
     /**
      * @param Branch $source
      * @param Branch $destiny
-     *
      * @param bool   $added
      * @param bool   $modified
      * @param bool   $deleted
@@ -62,21 +62,20 @@ class PostCheckout implements BasePostCheckout
         bool $modified = true,
         bool $deleted = false
     ): Generator {
-        $filter  = '';
-        $filter  .= $added ? 'A' : '';
-        $filter  .= $modified ? 'M' : '';
-        $filter  .= $deleted ? 'D' : '';
+        $filter = '';
+        $filter .= $added ? 'A' : '';
+        $filter .= $modified ? 'M' : '';
+        $filter .= $deleted ? 'D' : '';
 
         $command = "git diff --name-only --diff-filter={$filter} {$source->name()}..{$destiny->name()}";
 
         [$status, $output] = $this->terminal->run($command);
 
-        if ($status === 0) {
-            $files = explode("\n", $output);
+        if (0 === $status) {
+            $files = \explode("\n", $output);
             foreach ($files as $file) {
                 yield new File($file);
             }
         }
     }
-
 }

@@ -58,10 +58,10 @@ class RunPluginCommandHandler
      */
     public function __invoke(RunPluginCommand $query): void
     {
-        $dir     = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
-        $plugin  = new Plugin($query->plugin());
-        $event   = new Event($query->event());
-        $params  = $query->params();
+        $dir    = new Directory($this->bus->dispatch(new GetProjectDirectoryQuery()));
+        $plugin = new Plugin($query->plugin());
+        $event  = new Event($query->event());
+        $params = $query->params();
 
         $verbose = new Verbose(
             $this->gitamine->getConfiguration($this->gitamine->getProjectFolder())['_options']['verbose']

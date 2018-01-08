@@ -45,7 +45,7 @@ class InitCommand extends ContainerAwareCommand
         \exec('mkdir ~/.gitamine 2> /dev/null');
         \exec('mkdir ~/.gitamine/plugins 2> /dev/null');
 
-        $bin     = \dirname(__DIR__, 2) . '/gitamine';
+        $bin = \dirname(__DIR__, 2) . '/gitamine';
 
         // TODO Initialize project hooks or update
         foreach (Event::VALID_EVENTS as $event) {

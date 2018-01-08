@@ -22,7 +22,7 @@ class FetchAddedFilesQueryHandlerTest extends TestCase
      */
     public function testShouldFetchAddedFiles(): void
     {
-        $dir = '/';
+        $dir   = '/';
         $files = ['/test.txt'];
 
         $repo = VersionControlMock::create();

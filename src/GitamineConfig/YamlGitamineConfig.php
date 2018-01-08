@@ -70,7 +70,7 @@ class YamlGitamineConfig implements GitamineConfig
      * @param GithubPlugin  $githubPlugin
      * @param Event         $event
      * @param PluginOptions $pluginOptions
-     * @param string       $args
+     * @param string        $args
      * @param Verbose       $verbose
      * @param null|string   $output
      *
