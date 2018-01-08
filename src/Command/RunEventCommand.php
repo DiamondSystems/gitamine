@@ -38,8 +38,8 @@ class RunEventCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            \exec('mkdir ~/.gitamine &> /dev/null');
-            \exec('mkdir ~/.gitamine/plugins &> /dev/null');
+            \exec('mkdir ~/.gitamine 2> /dev/null');
+            \exec('mkdir ~/.gitamine/plugins 2> /dev/null');
 
             //$commandBus = $this->getContainer()->get('prooph_service_bus.gitamine_command_bus');
             $queryBus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
