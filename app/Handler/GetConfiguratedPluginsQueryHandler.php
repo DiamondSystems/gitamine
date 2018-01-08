@@ -50,6 +50,7 @@ class GetConfiguratedPluginsQueryHandler
         $list    = [];
 
         foreach ($plugins as $plugin) {
+            dump($plugin);
             $list[] = $plugin->name();
         }
 
