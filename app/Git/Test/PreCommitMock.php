@@ -41,9 +41,24 @@ class PreCommitMock
     {
         $this->postCheckout->shouldReceive('getFiles')
                            ->once()
-                        ->with(
-                            Matchers::equalTo(new FileStatus(''))
-                        )
+                           ->with(
+                               Matchers::equalTo(new FileStatus(''))
+                           )
+                           ->andReturn(\array_map(function (string $file) {
+                               return new File($file);
+                           }, $return));
+    }
+
+    /**
+     * @param string[] $return
+     */
+    public function mockGetStagedFiles(array $return): void
+    {
+        $this->postCheckout->shouldReceive('getStagedFiles')
+                           ->once()
+                           ->with(
+                               Matchers::equalTo(new FileStatus(''))
+                           )
                            ->andReturn(\array_map(function (string $file) {
                                return new File($file);
                            }, $return));

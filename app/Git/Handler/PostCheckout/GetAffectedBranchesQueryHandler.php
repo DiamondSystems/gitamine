@@ -26,6 +26,7 @@ final class GetAffectedBranchesQueryHandler
     {
         $this->postCheckout = $postCheckout;
     }
+
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *

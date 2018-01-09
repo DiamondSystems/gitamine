@@ -21,7 +21,7 @@ class GetAffectedFilesQueryHandlerTest extends TestCase
         $files = [$this->file('file.txt')];
 
         $preCommit = new PreCommitMock();
-        $preCommit->mockGetFiles($files);
+        $preCommit->mockGetStagedFiles($files);
 
         $handler = new GetAffectedFilesQueryHandler($preCommit->mock());
         $result  = $handler(new GetAffectedFilesQuery(''));
