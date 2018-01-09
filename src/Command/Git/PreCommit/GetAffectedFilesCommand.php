@@ -55,7 +55,7 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
             /** @var string[] $files */
             $files = $this->bus->dispatch(new GetAffectedFilesQuery($status, $filter));
 
-            $output->writeln(implode($join, $files));
+            $output->writeln(\implode($join, $files));
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 

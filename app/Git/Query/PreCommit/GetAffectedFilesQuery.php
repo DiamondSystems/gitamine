@@ -18,7 +18,7 @@ class GetAffectedFilesQuery
      * @var string
      */
     private $filter;
-    
+
     /**
      * GetAffectedFilesQuery constructor.
      *
