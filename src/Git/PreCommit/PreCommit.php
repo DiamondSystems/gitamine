@@ -31,9 +31,11 @@ class PreCommit implements BasePreCommit
      */
     public function getFiles(FileStatus $status): array
     {
-        $command           = "git diff --name-only --diff-filter={$status->status()}";
+        $command = "git diff --name-only --diff-filter={$status->status()}";
         [$status, $output] = $this->terminal->run($command);
 
+        $return = [];
+        
         if (0 === $status) {
             $files = \explode("\n", $output);
             foreach ($files as $file) {
@@ -51,7 +53,7 @@ class PreCommit implements BasePreCommit
      */
     public function getStagedFiles(FileStatus $status): array
     {
-        $command           = "git diff --staged --name-only --diff-filter={$status->status()}";
+        $command = "git diff --staged --name-only --diff-filter={$status->status()}";
         [$status, $output] = $this->terminal->run($command);
 
         $return = [];
