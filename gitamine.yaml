@@ -16,8 +16,6 @@ gitamine:
       phpcbf: true
     phpmd:
       bin: bin/phpmd
-
-  pre-push:
     phpunit:
       bin: bin/phpunit
       min-coverage: 0
