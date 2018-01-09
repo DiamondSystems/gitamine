@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Gitamine\Git\Domain;
 
+use Gitamine\Domain\RegExp;
 use Gitamine\Git\Exception\InvalidFileException;
 
 /**
  * Class Directory.
  */
-class File
+final class File
 {
     /**
      * @var string
@@ -44,5 +45,15 @@ class File
     public function filename(): string
     {
         return \basename($this->file());
+    }
+
+    /**
+     * @param RegExp $regExp
+     *
+     * @return bool
+     */
+    public function match(RegExp $regExp): bool
+    {
+        return $regExp->match($this->file);
     }
 }

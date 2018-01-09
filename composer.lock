@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "364606f48582ee46a054308357717184",
+    "content-hash": "5ebeb9b83997332c7c74d1fc3ff56580",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1133,16 +1133,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.57",
+            "version": "v1.0.59",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec"
+                "reference": "2015d2d699ddfaa71a4d2415d39b8bffd13d2ce7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/73423de7560c492f159aeb3eb9687b470bc87aec",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/2015d2d699ddfaa71a4d2415d39b8bffd13d2ce7",
+                "reference": "2015d2d699ddfaa71a4d2415d39b8bffd13d2ce7",
                 "shasum": ""
             },
             "require": {
@@ -1175,7 +1175,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-03T11:28:30+00:00"
+            "time": "2018-01-09T05:50:13+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -4169,7 +4169,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "j13k/yaml-lint": 0,
+        "phpmd/phpmd": 0,
+        "phpunit/phpunit": 0,
+        "squizlabs/php_codesniffer": 0,
+        "friendsofphp/php-cs-fixer": 0
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

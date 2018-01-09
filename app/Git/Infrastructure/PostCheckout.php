@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Gitamine\Git\Infrastructure;
 
-use Generator;
 use Gitamine\Git\Domain\Branch;
 use Gitamine\Git\Domain\File;
+use Gitamine\Git\Domain\FileStatus;
 
 /**
  * Interface PostCheckout.
@@ -21,17 +21,9 @@ interface PostCheckout
     /**
      * @param Branch $source
      * @param Branch $destiny
-     * @param bool   $added
-     * @param bool   $modified
-     * @param bool   $deleted
+     * @param FileStatus $status
      *
-     * @return File[]|Generator
+     * @return File[]
      */
-    public function getFiles(
-        Branch $source,
-        Branch $destiny,
-        bool $added = true,
-        bool $modified = true,
-        bool $deleted = false
-    ): Generator;
+    public function getFiles(Branch $source, Branch $destiny, FileStatus $status): array;
 }

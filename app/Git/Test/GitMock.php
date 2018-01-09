@@ -26,7 +26,7 @@ class GitMock
     /**
      * @return MockInterface|Git
      */
-    public function git(): Git
+    public function mock(): Git
     {
         return $this->git;
     }

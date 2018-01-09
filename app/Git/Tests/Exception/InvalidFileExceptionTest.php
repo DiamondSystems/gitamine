@@ -17,7 +17,7 @@ class InvalidFileExceptionTest extends TestCase
 {
     public function testShouldHaveCorrectCode(): void
     {
-        $exception = new InvalidFileException(new File($this->file('file.txt')));
-        self::assertEquals(1, $exception->getCode());
+        $this->expectExceptionCode(1);
+        new File('file.txt');
     }
 }

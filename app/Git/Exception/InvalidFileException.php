@@ -11,7 +11,7 @@ use Throwable;
 /**
  * Class InvalidFileException.
  */
-class InvalidFileException extends RuntimeException
+final class InvalidFileException extends RuntimeException
 {
     /**
      * InvalidFileException constructor.

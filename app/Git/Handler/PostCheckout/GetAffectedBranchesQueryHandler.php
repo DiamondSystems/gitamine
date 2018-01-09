@@ -9,7 +9,7 @@ use Gitamine\Git\Infrastructure\PostCheckout;
 /**
  * Class GetAffectedBranchesQueryHandler.
  */
-class GetAffectedBranchesQueryHandler
+final class GetAffectedBranchesQueryHandler
 {
     /**
      * @var PostCheckout

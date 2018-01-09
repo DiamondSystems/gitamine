@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Gitamine\Git\Test;
 
-use Generator;
 use Gitamine\Git\Domain\Branch;
 use Gitamine\Git\Domain\File;
+use Gitamine\Git\Domain\FileStatus;
 use Gitamine\Git\Infrastructure\PostCheckout;
 use Hamcrest\Matchers;
 use Mockery;
@@ -30,7 +30,7 @@ class PostCheckoutMock
     /**
      * @return MockInterface|PostCheckout
      */
-    public function postCheckout(): PostCheckout
+    public function mock(): PostCheckout
     {
         return $this->postCheckout;
     }
@@ -52,26 +52,17 @@ class PostCheckoutMock
      * @param string   $destiny
      * @param string[] $files
      */
-    public function mockGetAffectedFiles(string $source, string $destiny, array $files): void
+    public function mockGetFiles(string $source, string $destiny, array $files): void
     {
-        $this->postCheckout->shouldReceive('getAffectedFiles')
+        $this->postCheckout->shouldReceive('getFiles')
                            ->once()
-                        ->with(
-                            Matchers::equalTo(new Branch($source)),
-                            Matchers::equalTo(new Branch($destiny))
-                        )
-                           ->andReturn($this->builFiles($files));
-    }
-
-    /**
-     * @param array $list
-     *
-     * @return Generator
-     */
-    private function builFiles(array $list): Generator
-    {
-        foreach ($list as $element) {
-            yield new File($element);
-        }
+                           ->with(
+                               Matchers::equalTo(new Branch($source)),
+                               Matchers::equalTo(new Branch($destiny)),
+                               Matchers::equalTo(new FileStatus(''))
+                           )
+                           ->andReturn(array_map(function (string $file) {
+                               return new File($file);
+                           }, $files));
     }
 }

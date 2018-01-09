@@ -20,7 +20,7 @@ class GetAffectedBranchesQueryHandlerTest extends TestCase
         $postCheckout = new PostCheckoutMock();
         $postCheckout->mockGetAffectedBranches('master', 'develop');
 
-        $handler  = new GetAffectedBranchesQueryHandler($postCheckout->postCheckout());
+        $handler  = new GetAffectedBranchesQueryHandler($postCheckout->mock());
         $branches = $handler();
 
         self::assertEquals(['master', 'develop'], $branches);

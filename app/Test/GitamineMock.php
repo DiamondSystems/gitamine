@@ -85,7 +85,7 @@ class GitamineMock
 
         $this->gitamine->shouldReceive('runPlugin')
                        ->once()
-                       ->with($thePlugin, $theEvent, $theOptions, $theLevel, '')
+                       ->with($thePlugin, $theEvent, $theOptions, '', $theLevel, '')
                        ->andReturn($return);
     }
 

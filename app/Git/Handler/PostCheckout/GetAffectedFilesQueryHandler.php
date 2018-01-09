@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Gitamine\Git\Handler\PostCheckout;
 
-use Generator;
+use Gitamine\Domain\RegExp;
 use Gitamine\Git\Domain\Branch;
+use Gitamine\Git\Domain\FileStatus;
 use Gitamine\Git\Infrastructure\PostCheckout;
 use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
 
 /**
  * Class GetAffectedFilesQueryHandler.
  */
-class GetAffectedFilesQueryHandler
+final class GetAffectedFilesQueryHandler
 {
     /**
      * @var PostCheckout
@@ -32,22 +33,27 @@ class GetAffectedFilesQueryHandler
     /**
      * @param GetAffectedFilesQuery $query
      *
-     * @return string[]|Generator
+     * @return string[]
      */
-    public function __invoke(GetAffectedFilesQuery $query): Generator
+    public function __invoke(GetAffectedFilesQuery $query): array
     {
         [$source, $destiny] = $this->postCheckout->getAffectedBranches();
+        $regExp = new RegExp($query->filter());
 
         if ($query->source()) {
             $source = new Branch($query->source());
         }
 
-        $files = $this->postCheckout->getAffectedFiles($source, $destiny);
+        $files = $this->postCheckout->getFiles($source, $destiny, new FileStatus($query->status()));
+
+        $return = [];
 
         foreach ($files as $file) {
-            if (\preg_match('/' . $query->filter() . '/', $file->file())) {
-                yield $file->file();
+            if ($file->match($regExp)) {
+                $return[] = $file->file();
             }
         }
+
+        return $return;
     }
 }

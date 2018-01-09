@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Git\PostCheckout;
 
 use App\Terminal;
-use Generator;
 use Gitamine\Git\Domain\Branch;
 use Gitamine\Git\Domain\File;
+use Gitamine\Git\Domain\FileStatus;
 use Gitamine\Git\Infrastructure\PostCheckout as BasePostCheckout;
 
 /**
@@ -47,35 +47,27 @@ class PostCheckout implements BasePostCheckout
     }
 
     /**
-     * @param Branch $source
-     * @param Branch $destiny
-     * @param bool   $added
-     * @param bool   $modified
-     * @param bool   $deleted
+     * @param Branch     $source
+     * @param Branch     $destiny
+     * @param FileStatus $status
      *
-     * @return File[]|Generator
+     * @return File[]
      */
-    public function getFiles(
-        Branch $source,
-        Branch $destiny,
-        bool $added = true,
-        bool $modified = true,
-        bool $deleted = false
-    ): Generator {
-        $filter = '';
-        $filter .= $added ? 'A' : '';
-        $filter .= $modified ? 'M' : '';
-        $filter .= $deleted ? 'D' : '';
-
-        $command = "git diff --name-only --diff-filter={$filter} {$source->name()}..{$destiny->name()}";
+    public function getFiles(Branch $source, Branch $destiny, FileStatus $status): array
+    {
+        $command = "git diff --name-only --diff-filter={$status->status()} {$source->name()}..{$destiny->name()}";
 
         [$status, $output] = $this->terminal->run($command);
+
+        $return = [];
 
         if (0 === $status) {
             $files = \explode("\n", $output);
             foreach ($files as $file) {
-                yield new File($file);
+                $return[] = new File($file);
             }
         }
+
+        return $return;
     }
 }

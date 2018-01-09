@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Gitamine\Git\Tests\Domain;
 
 use Gitamine\Common\Test\TestCase;
+use Gitamine\Domain\RegExp;
 use Gitamine\Git\Domain\File;
 use Gitamine\Git\Exception\InvalidFileException;
 
@@ -20,6 +21,8 @@ class FileTest extends TestCase
         $file = new File($this->file('file.txt'));
         self::assertEquals($this->file('file.txt'), $file->file());
         self::assertEquals('file.txt', $file->filename());
+        self::assertTrue($file->match(new RegExp('e\.txt')));
+        self::assertFalse($file->match(new RegExp('etxt')));
     }
 
     public function testShouldThrowInvalidFileException(): void
