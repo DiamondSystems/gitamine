@@ -56,12 +56,12 @@ class PostCheckoutMock
     {
         $this->postCheckout->shouldReceive('getFiles')
                            ->once()
-                           ->with(
-                               Matchers::equalTo(new Branch($source)),
-                               Matchers::equalTo(new Branch($destiny)),
-                               Matchers::equalTo(new FileStatus(''))
-                           )
-                           ->andReturn(array_map(function (string $file) {
+                        ->with(
+                            Matchers::equalTo(new Branch($source)),
+                            Matchers::equalTo(new Branch($destiny)),
+                            Matchers::equalTo(new FileStatus(''))
+                        )
+                           ->andReturn(\array_map(function (string $file) {
                                return new File($file);
                            }, $files));
     }

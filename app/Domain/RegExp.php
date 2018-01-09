@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Domain;
@@ -6,8 +7,7 @@ namespace Gitamine\Domain;
 use Gitamine\Exception\InvalidRegularExpressionException;
 
 /**
- * Class RegExp
- * @package Gitamine\Domain
+ * Class RegExp.
  */
 class RegExp
 {
@@ -25,7 +25,7 @@ class RegExp
     {
         $this->regExp = "/{$regExp}/";
 
-        if (@preg_match($regExp, '') !== false) {
+        if (false !== @\preg_match($regExp, '')) {
             throw new InvalidRegularExpressionException($this);
         }
     }
@@ -45,6 +45,6 @@ class RegExp
      */
     public function match(string $text): bool
     {
-        return 1 === preg_match($this->regExp, $text);
+        return 1 === \preg_match($this->regExp, $text);
     }
 }

@@ -38,7 +38,7 @@ final class GetAffectedFilesQueryHandler
     public function __invoke(GetAffectedFilesQuery $query): array
     {
         [$source, $destiny] = $this->postCheckout->getAffectedBranches();
-        $regExp = new RegExp($query->filter());
+        $regExp             = new RegExp($query->filter());
 
         if ($query->source()) {
             $source = new Branch($query->source());

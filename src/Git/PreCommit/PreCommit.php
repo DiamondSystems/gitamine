@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Git\PreCommit;
@@ -9,8 +10,7 @@ use Gitamine\Git\Domain\FileStatus;
 use Gitamine\Git\Infrastructure\PreCommit as BasePreCommit;
 
 /**
- * Class PreCommit
- * @package App\Git\PreCommit
+ * Class PreCommit.
  */
 class PreCommit implements BasePreCommit
 {
@@ -31,7 +31,7 @@ class PreCommit implements BasePreCommit
      */
     public function getFiles(FileStatus $status): array
     {
-        $command = "git diff --name-only --diff-filter={$status->status()}";
+        $command           = "git diff --name-only --diff-filter={$status->status()}";
         [$status, $output] = $this->terminal->run($command);
 
         if (0 === $status) {
@@ -51,7 +51,7 @@ class PreCommit implements BasePreCommit
      */
     public function getStagedFiles(FileStatus $status): array
     {
-        $command = "git diff --staged --name-only --diff-filter={$status->status()}";
+        $command           = "git diff --staged --name-only --diff-filter={$status->status()}";
         [$status, $output] = $this->terminal->run($command);
 
         $return = [];
@@ -73,6 +73,6 @@ class PreCommit implements BasePreCommit
      */
     public function getNotStagedFiles(FileStatus $status): array
     {
-        return array_diff($this->getFiles($status), $this->getStagedFiles($status));
+        return \array_diff($this->getFiles($status), $this->getStagedFiles($status));
     }
 }

@@ -9,7 +9,7 @@ use Gitamine\Git\Domain\FileStatus;
 use Gitamine\Git\Exception\InvalidFileStatusException;
 
 /**
- * Class FileStatustTest
+ * Class FileStatustTest.
  *
  * @covers \Gitamine\Git\Domain\FileStatus
  */

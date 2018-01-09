@@ -8,7 +8,7 @@ use Gitamine\Common\Test\TestCase;
 use Gitamine\Git\Domain\FileStatus;
 
 /**
- * Class InvalidFileStatusException
+ * Class InvalidFileStatusException.
  *
  * @covers \Gitamine\Git\Exception\InvalidFileStatusException
  */

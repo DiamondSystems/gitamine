@@ -19,8 +19,8 @@ interface PostCheckout
     public function getAffectedBranches(): array;
 
     /**
-     * @param Branch $source
-     * @param Branch $destiny
+     * @param Branch     $source
+     * @param Branch     $destiny
      * @param FileStatus $status
      *
      * @return File[]

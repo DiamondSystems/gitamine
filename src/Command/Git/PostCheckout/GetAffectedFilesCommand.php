@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\PostCheckout;
+namespace App\Command\Git\PostCheckout;
 
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
@@ -32,12 +32,8 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
                 InputArgument::OPTIONAL,
                 'Reference branch'
             )
-            ->addArgument(
-                'filter',
-                InputArgument::OPTIONAL,
-                'Reference branch',
-                '/*/'
-            );
+            ->addArgument('join', InputArgument::OPTIONAL, 'How to join the files', "\n")
+            ->addArgument('filter', InputArgument::OPTIONAL, 'Reference branch', '.*');
     }
 
     /**
@@ -53,14 +49,14 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
         $branch    = $input->getArgument('source-branch');
         $filter    = $input->getArgument('filter');
+        $status    = $input->getArgument('status');
+        $join      = $input->getArgument('join');
 
         try {
             /** @var string[] $files */
-            $files = $this->bus->dispatch(new GetAffectedFilesQuery($branch, $filter));
+            $files = $this->bus->dispatch(new GetAffectedFilesQuery($branch, $status, $filter));
 
-            foreach ($files as $file) {
-                $output->writeln($file);
-            }
+            $output->writeln(implode($join, $files));
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 

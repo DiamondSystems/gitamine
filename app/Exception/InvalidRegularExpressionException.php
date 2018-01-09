@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Exception;
@@ -8,8 +9,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class InvalidRegularExpressionException
- * @package Gitamine\Exception
+ * Class InvalidRegularExpressionException.
  */
 class InvalidRegularExpressionException extends RuntimeException
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Infrastructure;
@@ -7,8 +8,7 @@ use Gitamine\Git\Domain\File;
 use Gitamine\Git\Domain\FileStatus;
 
 /**
- * Interface PreCommit
- * @package Gitamine\Git\Infrastructure
+ * Interface PreCommit.
  */
 interface PreCommit
 {

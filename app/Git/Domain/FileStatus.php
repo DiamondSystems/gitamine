@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Domain;
@@ -6,8 +7,7 @@ namespace Gitamine\Git\Domain;
 use Gitamine\Git\Exception\InvalidFileStatusException;
 
 /**
- * Class FileStatus
- * @package Gitamine\Git\Domain
+ * Class FileStatus.
  */
 class FileStatus
 {
@@ -25,7 +25,7 @@ class FileStatus
     {
         $this->status = $status;
 
-        if (!preg_match('/^[AMD]*$/', $status)) {
+        if (!\preg_match('/^[AMD]*$/', $status)) {
             throw new InvalidFileStatusException($this);
         }
     }
@@ -37,5 +37,4 @@ class FileStatus
     {
         return $this->status;
     }
-
 }

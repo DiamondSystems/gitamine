@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Command\PreCommit;
+namespace App\Command\Git\PreCommit;
 
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery;
+use Gitamine\Git\Query\PreCommit\GetAffectedFilesQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,12 +32,8 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
                 InputArgument::OPTIONAL,
                 'A = Added, M = Modified, D = Deleted (you can combine them, ie AM for added and modified)'
             )
-            ->addArgument(
-                'filter',
-                InputArgument::OPTIONAL,
-                'Reference branch',
-                '/*/'
-            );
+            ->addArgument('join', InputArgument::OPTIONAL, 'How to join the files', "\n")
+            ->addArgument('filter', InputArgument::OPTIONAL, 'Reference branch', '.*');
     }
 
     /**
@@ -51,16 +47,15 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
-        $branch    = $input->getArgument('source-branch');
+        $status    = $input->getArgument('status');
+        $join      = $input->getArgument('join');
         $filter    = $input->getArgument('filter');
 
         try {
             /** @var string[] $files */
-            $files = $this->bus->dispatch(new GetAffectedFilesQuery($branch, $filter));
+            $files = $this->bus->dispatch(new GetAffectedFilesQuery($status, $filter));
 
-            foreach ($files as $file) {
-                $output->writeln($file);
-            }
+            $output->writeln(implode($join, $files));
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gitamine\Git\Handler\PreCommit;
@@ -9,8 +10,7 @@ use Gitamine\Git\Infrastructure\PreCommit;
 use Gitamine\Git\Query\PreCommit\GetAffectedFilesQuery;
 
 /**
- * Class GetAffectedFilesQueryHandler
- * @package Gitamine\Git\Handler\PreCommit
+ * Class GetAffectedFilesQueryHandler.
  */
 final class GetAffectedFilesQueryHandler
 {
@@ -38,7 +38,7 @@ final class GetAffectedFilesQueryHandler
     {
         $files = $this->preCommit->getFiles(new FileStatus($query->status()));
 
-        return array_map(function (File $file) {
+        return \array_map(function (File $file) {
             return $file->file();
         }, $files);
     }

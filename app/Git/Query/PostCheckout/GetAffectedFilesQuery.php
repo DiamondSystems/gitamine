@@ -27,18 +27,15 @@ final class GetAffectedFilesQuery
     /**
      * GetAffectedFilesQuery constructor.
      *
-     * @param string      $source
-     * @param string      $status
-     * @param null|string $filter
+     * @param string $source
+     * @param string $status
+     * @param string $filter
      */
-    public function __construct(
-        string $source,
-        string $status,
-        string $filter = null
-    ) {
+    public function __construct(string $source, string $status, string $filter = '.*')
+    {
         $this->source = $source;
         $this->status = $status;
-        $this->filter = $filter ?? '.*';
+        $this->filter = $filter;
     }
 
     /**

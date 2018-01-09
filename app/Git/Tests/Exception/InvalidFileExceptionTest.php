@@ -6,7 +6,6 @@ namespace Gitamine\Git\Tests\Exception;
 
 use Gitamine\Common\Test\TestCase;
 use Gitamine\Git\Domain\File;
-use Gitamine\Git\Exception\InvalidFileException;
 
 /**
  * Class InvalidFileExceptionTest.

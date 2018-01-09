@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\PostCheckout;
+namespace App\Command\Git\PostCheckout;
 
 use App\Prooph\SynchronousQueryBus;
 use Gitamine\Exception\InvalidSubversionDirectoryException;

@@ -21,5 +21,6 @@ class GetAffectedFilesQueryTest extends TestCase
 
         $query = new GetAffectedFilesQuery('M', 'test');
         self::assertEquals('M', $query->status());
+        self::assertEquals('test', $query->filter());
     }
 }
