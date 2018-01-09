@@ -3,23 +3,32 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
+  # default configuration for services in *this* file
+  _defaults:
+      autowire: true      # Automatically injects dependencies in your services.
+      autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+      public: false       # Allows optimizing the container by removing unused services; this also means
+                          # fetching services directly from the container via $container->get() won't work.
+                          # The best practice is to be explicit about your dependencies anyway.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests}'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+      resource: '../src/*'
+      exclude: '../src/{Entity,Migrations,Tests}'
 
-    subversion.repository:
-        class: App\SubversionRepository\GitRepository
-    gitamine.config:
-        class: App\GitamineConfig\YamlGitamineConfig
-    output:
-        class: App\Output\ConsoleOutput
+  subversion.repository:
+      class: App\SubversionRepository\GitRepository
+  gitamine.config:
+      class: App\GitamineConfig\YamlGitamineConfig
+  output:
+      class: App\Output\ConsoleOutput
+
+  # PreCommit
+  App\Git\PreCommit\PreCommit: ~
+  Gitamine\Git\Infrastructure\PreCommit: '@App\Git\PreCommit\PreCommit'
+
+  # PostCheckout
+  App\Git\PostCheckout\PostCheckout: ~
+  Gitamine\Git\Infrastructure\PostCheckout: '@App\Git\PostCheckout\PostCheckout'
+

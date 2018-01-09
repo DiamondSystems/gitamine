@@ -6,6 +6,7 @@ namespace Gitamine\Git\Tests\Handler\PostCheckout;
 
 use Gitamine\Common\Test\TestCase;
 use Gitamine\Git\Handler\PostCheckout\GetAffectedBranchesQueryHandler;
+use Gitamine\Git\Query\PostCheckout\GetAffectedBranchesQuery;
 use Gitamine\Git\Test\PostCheckoutMock;
 
 /**
@@ -21,7 +22,7 @@ class GetAffectedBranchesQueryHandlerTest extends TestCase
         $postCheckout->mockGetAffectedBranches('master', 'develop');
 
         $handler  = new GetAffectedBranchesQueryHandler($postCheckout->mock());
-        $branches = $handler();
+        $branches = $handler(new GetAffectedBranchesQuery());
 
         self::assertEquals(['master', 'develop'], $branches);
     }

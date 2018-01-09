@@ -8,6 +8,32 @@ services:
   prooph_service_bus.gitamine_query_bus:
     public: true
 
+  # PostCheckout
+  Gitamine\Git\Handler\PostCheckout\GetAffectedBranchesQueryHandler:
+    arguments: ['@Gitamine\Git\Infrastructure\PostCheckout']
+    tags:
+      -
+        name: 'prooph_service_bus.gitamine_query_bus.route_target'
+        message: Gitamine\Git\Query\PostCheckout\GetAffectedBranchesQuery
+
+  Gitamine\Git\Handler\PostCheckout\GetAffectedFilesQueryHandler:
+    arguments: ['@Gitamine\Git\Infrastructure\PostCheckout']
+    tags:
+      -
+        name: 'prooph_service_bus.gitamine_query_bus.route_target'
+        message: Gitamine\Git\Query\PostCheckout\GetAffectedFilesQuery
+
+  # PreCommit
+  Gitamine\Git\Handler\PreCommit\GetAffectedFilesQueryHandler:
+    arguments: ['@Gitamine\Git\Infrastructure\PreCommit']
+    tags:
+      -
+        name: 'prooph_service_bus.gitamine_query_bus.route_target'
+        message: Gitamine\Git\Query\PreCommit\GetAffectedFilesQuery
+
+
+
+  # deprecated
   Gitamine\Handler\FetchCommittedFilesQueryHandler:
     arguments: ['@subversion.repository']
     public: true

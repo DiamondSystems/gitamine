@@ -31,19 +31,7 @@ class PreCommit implements BasePreCommit
      */
     public function getFiles(FileStatus $status): array
     {
-        $command = "git diff --name-only --diff-filter={$status->status()}";
-        [$status, $output] = $this->terminal->run($command);
-
-        $return = [];
-        
-        if (0 === $status) {
-            $files = \explode("\n", $output);
-            foreach ($files as $file) {
-                $return[] = new File($file);
-            }
-        }
-
-        return $return;
+        return \array_unique(\array_merge($this->getFiles($status), $this->getStagedFiles($status)));
     }
 
     /**
@@ -53,7 +41,7 @@ class PreCommit implements BasePreCommit
      */
     public function getStagedFiles(FileStatus $status): array
     {
-        $command = "git diff --staged --name-only --diff-filter={$status->status()}";
+        $command           = "git diff --staged --name-only --diff-filter={$status->status()}";
         [$status, $output] = $this->terminal->run($command);
 
         $return = [];
@@ -61,7 +49,9 @@ class PreCommit implements BasePreCommit
         if (0 === $status) {
             $files = \explode("\n", $output);
             foreach ($files as $file) {
-                $return[] = new File($file);
+                if (!empty($file)) {
+                    $return[] = new File($file);
+                }
             }
         }
 
@@ -75,6 +65,21 @@ class PreCommit implements BasePreCommit
      */
     public function getNotStagedFiles(FileStatus $status): array
     {
-        return \array_diff($this->getFiles($status), $this->getStagedFiles($status));
+        $command = "git diff --name-only --diff-filter={$status->status()}";
+
+        [$status, $output] = $this->terminal->run($command);
+        $return            = [];
+
+        if (0 === $status) {
+            $files = \explode("\n", $output);
+
+            foreach ($files as $file) {
+                if (!empty($file)) {
+                    $return[] = new File($file);
+                }
+            }
+        }
+
+        return $return;
     }
 }

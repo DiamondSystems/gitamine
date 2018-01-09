@@ -36,7 +36,7 @@ final class GetAffectedFilesQueryHandler
      */
     public function __invoke(GetAffectedFilesQuery $query): array
     {
-        $files = $this->preCommit->getFiles(new FileStatus($query->status()));
+        $files = $this->preCommit->getStagedFiles(new FileStatus($query->status()));
 
         return \array_map(function (File $file) {
             return $file->file();

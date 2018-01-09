@@ -34,7 +34,7 @@ class Terminal
      */
     public function run(string $command, bool $outputWithErrors = true): array
     {
-        $pipe   = $outputWithErrors ? '2 > &1' : '2 > /dev/null';
+        $pipe   = $outputWithErrors ? '2>&1' : '2>/dev/null';
         $status = 0;
         $output = [];
 

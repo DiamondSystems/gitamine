@@ -64,7 +64,9 @@ class PostCheckout implements BasePostCheckout
         if (0 === $status) {
             $files = \explode("\n", $output);
             foreach ($files as $file) {
-                $return[] = new File($file);
+                if (!empty($file)) {
+                    $return[] = new File($file);
+                }
             }
         }
 
