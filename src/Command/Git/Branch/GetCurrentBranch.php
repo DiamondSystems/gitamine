@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Git\PostCheckout;
+namespace App\Command\Git\Branch;
 
 use App\Prooph\QueryBus;
+use Gitamine\Core\Exception\InfrastructureException;
 use Gitamine\Deprecated\Core\Exception\InvalidSubversionDirectoryException;
+use Gitamine\Git\Branch\Query\GetBranch;
 use Gitamine\Git\PostCheckout\Query\GetAffectedBranches;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GetAffectedBranchesCommand.
+ * Class GetCurrentBranch.
  */
-final class GetAffectedBranchesCommand extends ContainerAwareCommand
+final class GetCurrentBranch extends ContainerAwareCommand
 {
     /**
      * @var QueryBus;
@@ -36,8 +38,8 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
     protected function configure(): void
     {
         $this
-            ->setName('git:post-checkout:branches')
-            ->setDescription('Returns the source and destiny branches on a post-checkout');
+            ->setName('git:branch:current')
+            ->setDescription('Returns the current brnach name');
     }
 
     /**
@@ -50,20 +52,11 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $branch = $this->bus->dispatch(new GetBranch());
         try {
-            /* @var string[] $files */
-            $branches = $this->bus->dispatch(new GetAffectedBranches());
-
-            if (count($branches) === 2) {
-                [$source, $destination] = $branches;
-                $output->writeln("{$source},{$destination}");
-            } else {
-                $output->writeln('<error>No branches are affected</error>');
-            }
-        } catch (InvalidSubversionDirectoryException $e) {
+            $output->writeln($branch);
+        } catch (InfrastructureException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
-
-            return $e->getCode();
         }
 
         return 0;

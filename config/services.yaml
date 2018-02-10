@@ -26,6 +26,7 @@ services:
     public: true
 
   # PreCommit
+  Gitamine\Git\Branch\Infrastructure\Branch: '@App\Git\Branch\Branch'
   Gitamine\Git\PreCommit\Infrastructure\PreCommit: '@App\Git\PreCommit\PreCommit'
   Gitamine\Git\PostCheckout\Infrastructure\PostCheckout: '@App\Git\PostCheckout\PostCheckout'
 

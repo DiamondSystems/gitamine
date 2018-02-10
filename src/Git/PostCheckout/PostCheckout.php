@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Git\PostCheckout;
 
-use App\Terminal;
+use Gitamine\Core\Domain\Command;
+use Gitamine\Core\Exception\InfrastructureException;
 use Gitamine\Git\Common\Domain\Branch;
 use Gitamine\Git\Common\Domain\File;
 use Gitamine\Git\Common\Domain\FileStatus;
@@ -16,38 +17,26 @@ use Gitamine\Git\PostCheckout\Infrastructure\PostCheckout as BasePostCheckout;
 class PostCheckout implements BasePostCheckout
 {
     /**
-     * @var Terminal
-     */
-    private $terminal;
-
-    public function __construct()
-    {
-        $this->terminal = new Terminal();
-    }
-
-    /**
      * @return Branch[]
      */
     public function getAffectedBranches(): array
     {
-        $command = "git reflog | awk 'NR==1{ print $6 \"\n\" $8; exit }'";
+        Command::checkExecutable('git status');
+        $command = new Command("git reflog | awk 'NR==1{ print $6 \"\\n\" $8; exit }' ");
+        $command->run();
 
-        $out = $this->terminal->run($command);
-
-        if (count($out) > 2) {
-            [$status, $output] = $out;
-
-            if (0 === $status) {
-                [$source, $destination] = \explode(PHP_EOL, $output);
-
-                return [
-                    new Branch($source),
-                    new Branch($destination)
-                ];
-            }
+        if ($command->lines() !== 2) {
+            throw new InfrastructureException('Cannot retrieve affected branches');
         }
 
-        return [];
+        $output = $command->output();
+
+        [$source, $destination] = \explode(PHP_EOL, $output);
+
+        return [
+            new Branch($source),
+            new Branch($destination)
+        ];
     }
 
     /**
@@ -59,19 +48,18 @@ class PostCheckout implements BasePostCheckout
      */
     public function getFiles(Branch $source, Branch $destiny, FileStatus $status): array
     {
-        $command = "git diff --name-only --diff-filter={$status->status()} {$source->name()}..{$destiny->name()}";
+        Command::checkExecutable('git status');
 
-        [$status, $output] = $this->terminal->run($command);
+        $command = new Command(
+            "git diff --name-only --diff-filter={$status->status()} {$source->name()}..{$destiny->name()}"
+        );
+
+        $command->run();
 
         $return = [];
-
-        if (0 === $status) {
-            $files = \explode("\n", $output);
-            foreach ($files as $file) {
-                if (!empty($file)) {
-                    $return[] = new File($file);
-                }
-            }
+        $files  = \explode("\n", $command->output());
+        foreach ($files as $file) {
+            $return[] = new File($file);
         }
 
         return $return;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Git\PreCommit;
 
-use App\Terminal;
+use Gitamine\Core\Domain\Command;
 use Gitamine\Git\Common\Domain\File;
 use Gitamine\Git\Common\Domain\FileStatus;
 use Gitamine\Git\PreCommit\Infrastructure\PreCommit as BasePreCommit;
@@ -14,16 +14,6 @@ use Gitamine\Git\PreCommit\Infrastructure\PreCommit as BasePreCommit;
  */
 class PreCommit implements BasePreCommit
 {
-    /**
-     * @var Terminal
-     */
-    private $terminal;
-
-    public function __construct()
-    {
-        $this->terminal = new Terminal();
-    }
-
     /**
      * @param FileStatus $status
      *
@@ -41,17 +31,17 @@ class PreCommit implements BasePreCommit
      */
     public function getStagedFiles(FileStatus $status): array
     {
-        $command           = "git diff --staged --name-only --diff-filter={$status->status()}";
-        [$status, $output] = $this->terminal->run($command);
+        Command::checkExecutable('git status');
+        $command = new Command("git diff --staged --name-only --diff-filter={$status->status()}");
+        $command->run();
+        $output = $command->output();
 
         $return = [];
 
-        if (0 === $status) {
-            $files = \explode("\n", $output);
-            foreach ($files as $file) {
-                if (!empty($file)) {
-                    $return[] = new File($file);
-                }
+        $files = \explode("\n", $output);
+        foreach ($files as $file) {
+            if (!empty($file)) {
+                $return[] = new File($file);
             }
         }
 
@@ -65,18 +55,17 @@ class PreCommit implements BasePreCommit
      */
     public function getNotStagedFiles(FileStatus $status): array
     {
-        $command = "git diff --name-only --diff-filter={$status->status()}";
-
-        [$status, $output] = $this->terminal->run($command);
-        $return            = [];
+        Command::checkExecutable('git status');
+        $command = new Command("git diff --name-only --diff-filter={$status->status()}");
+        $command->run();
+        $output = $command->output();
+        $return = [];
 
         if (0 === $status) {
             $files = \explode("\n", $output);
 
             foreach ($files as $file) {
-                if (!empty($file)) {
-                    $return[] = new File($file);
-                }
+                $return[] = new File($file);
             }
         }
 

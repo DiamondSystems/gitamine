@@ -22,6 +22,18 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
      */
     private $bus;
 
+    /**
+     * GetAffectedBranchesCommand constructor.
+     *
+     * @param QueryBus $bus
+     */
+    public function __construct(QueryBus $bus)
+    {
+        parent::__construct();
+
+        $this->bus = $bus;
+    }
+
     protected function configure(): void
     {
         $this
@@ -31,6 +43,12 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
                 'source-branch',
                 InputArgument::OPTIONAL,
                 'Reference branch'
+            )
+            ->addArgument(
+                'status',
+                InputArgument::OPTIONAL,
+                'A = Added, M = Modified, D = Deleted (you can combine them, ie AM for added and modified)',
+                'AM'
             )
             ->addArgument('join', InputArgument::OPTIONAL, 'How to join the files', "\n")
             ->addArgument('filter', InputArgument::OPTIONAL, 'Reference branch', '.*');
@@ -46,7 +64,6 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->bus = $this->getContainer()->get('prooph_service_bus.gitamine_query_bus');
         $branch    = $input->getArgument('source-branch');
         $filter    = $input->getArgument('filter');
         $status    = $input->getArgument('status');

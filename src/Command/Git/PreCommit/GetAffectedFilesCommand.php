@@ -30,7 +30,8 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
             ->addArgument(
                 'status',
                 InputArgument::OPTIONAL,
-                'A = Added, M = Modified, D = Deleted (you can combine them, ie AM for added and modified)'
+                'A = Added, M = Modified, D = Deleted (you can combine them, ie AM for added and modified)',
+                'AM'
             )
             ->addArgument('join', InputArgument::OPTIONAL, 'How to join the files', "\n")
             ->addArgument('filter', InputArgument::OPTIONAL, 'Reference branch', '.*');

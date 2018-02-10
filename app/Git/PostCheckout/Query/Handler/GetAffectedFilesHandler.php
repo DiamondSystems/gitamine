@@ -37,20 +37,25 @@ final class GetAffectedFilesHandler
      */
     public function __invoke(GetAffectedFiles $query): array
     {
-        [$source, $destiny] = $this->postCheckout->getAffectedBranches();
-        $regExp             = new RegExp($query->filter());
-
-        if ($query->source()) {
-            $source = new Branch($query->source());
-        }
-
-        $files = $this->postCheckout->getFiles($source, $destiny, new FileStatus($query->status()));
+        $branches = $this->postCheckout->getAffectedBranches();
 
         $return = [];
 
-        foreach ($files as $file) {
-            if ($file->match($regExp)) {
-                $return[] = $file->file();
+        if (count($branches) === 2) {
+            [$source, $destiny] = $branches;
+
+            $regExp = new RegExp($query->filter());
+
+            if ($query->source()) {
+                $source = new Branch($query->source());
+            }
+
+            $files = $this->postCheckout->getFiles($source, $destiny, new FileStatus($query->status()));
+
+            foreach ($files as $file) {
+                if ($file->match($regExp)) {
+                    $return[] = $file->file();
+                }
             }
         }
 
