@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Prooph\SynchronousQueryBus;
-use Gitamine\Command\RunPluginCommand;
-use Gitamine\Exception\InvalidSubversionDirectoryException;
+use App\Prooph\QueryBus;
+use Gitamine\Deprecated\Core\Command\RunPluginCommand;
+use Gitamine\Deprecated\Core\Exception\InvalidSubversionDirectoryException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TestCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus
+     * @var QueryBus
      */
     private $bus;
 

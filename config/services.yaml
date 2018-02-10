@@ -17,18 +17,20 @@ services:
       resource: '../src/*'
       exclude: '../src/{Entity,Migrations,Tests}'
 
-  subversion.repository:
-      class: App\SubversionRepository\GitRepository
-  gitamine.config:
-      class: App\GitamineConfig\YamlGitamineConfig
-  output:
-      class: App\Output\ConsoleOutput
+  Gitamine\:
+    resource: '../app/*/*/{Command/Handler,Query/Handler}'
+    tags:
+      - { name: 'prooph_service_bus.gitamine_command_bus.route_target', message_detection: true }
+      - { name: 'prooph_service_bus.gitamine_query_bus.route_target', message_detection: true }
+    autowire: true
+    public: true
 
   # PreCommit
-  App\Git\PreCommit\PreCommit: ~
-  Gitamine\Git\Infrastructure\PreCommit: '@App\Git\PreCommit\PreCommit'
+  Gitamine\Git\PreCommit\Infrastructure\PreCommit: '@App\Git\PreCommit\PreCommit'
+  Gitamine\Git\PostCheckout\Infrastructure\PostCheckout: '@App\Git\PostCheckout\PostCheckout'
 
-  # PostCheckout
-  App\Git\PostCheckout\PostCheckout: ~
-  Gitamine\Git\Infrastructure\PostCheckout: '@App\Git\PostCheckout\PostCheckout'
+  #deprecated
+  Gitamine\Deprecated\Core\Infrastructure\GitamineConfig: '@App\GitamineConfig\YamlGitamineConfig'
+  Gitamine\Deprecated\Core\Infrastructure\Output: '@App\Output\ConsoleOutput'
+  Gitamine\Deprecated\Core\Infrastructure\SubversionRepository: '@App\SubversionRepository\GitRepository'
 

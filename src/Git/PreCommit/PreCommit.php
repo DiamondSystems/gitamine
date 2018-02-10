@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Git\PreCommit;
 
 use App\Terminal;
-use Gitamine\Git\Domain\File;
-use Gitamine\Git\Domain\FileStatus;
-use Gitamine\Git\Infrastructure\PreCommit as BasePreCommit;
+use Gitamine\Git\Common\Domain\File;
+use Gitamine\Git\Common\Domain\FileStatus;
+use Gitamine\Git\PreCommit\Infrastructure\PreCommit as BasePreCommit;
 
 /**
  * Class PreCommit.

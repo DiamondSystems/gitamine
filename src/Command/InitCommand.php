@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Prooph\SynchronousQueryBus;
-use Gitamine\Domain\Event;
-use Gitamine\Query\GetProjectDirectoryQuery;
+use App\Prooph\QueryBus;
+use Gitamine\Deprecated\Core\Domain\Event;
+use Gitamine\Deprecated\Core\Query\GetProjectDirectoryQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InitCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus;
+     * @var QueryBus;
      */
     private $bus;
 

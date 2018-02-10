@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command\Git\PostCheckout;
 
-use App\Prooph\SynchronousQueryBus;
-use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Git\Query\PostCheckout\GetAffectedBranchesQuery;
+use App\Prooph\QueryBus;
+use Gitamine\Deprecated\Core\Exception\InvalidSubversionDirectoryException;
+use Gitamine\Git\PostCheckout\Query\GetAffectedBranches;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class GetAffectedBranchesCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus;
+     * @var QueryBus;
      */
     private $bus;
 
@@ -42,9 +42,14 @@ final class GetAffectedBranchesCommand extends ContainerAwareCommand
 
         try {
             /* @var string[] $files */
-            [$source, $destination] = $this->bus->dispatch(new GetAffectedBranchesQuery());
+            $branches = $this->bus->dispatch(new GetAffectedBranches());
 
-            $output->writeln("{$source},{$destination}");
+            if (count($branches) === 2) {
+                [$source, $destination] = $branches;
+                $output->writeln("{$source},{$destination}");
+            } else {
+                $output->writeln('<error>No branches are affected</error>');
+            }
         } catch (InvalidSubversionDirectoryException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 

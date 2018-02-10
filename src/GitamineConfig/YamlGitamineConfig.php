@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\GitamineConfig;
 
-use Gitamine\Domain\Directory;
-use Gitamine\Domain\Event;
-use Gitamine\Domain\File;
-use Gitamine\Domain\GithubPlugin;
-use Gitamine\Domain\GithubPluginName;
-use Gitamine\Domain\GithubPluginVersion;
-use Gitamine\Domain\Plugin;
-use Gitamine\Domain\PluginOptions;
-use Gitamine\Domain\Verbose;
-use Gitamine\Exception\GithubProjectDoesNotExist;
-use Gitamine\Exception\InvalidDirException;
-use Gitamine\Exception\MissingConfigurationFileException;
-use Gitamine\Infrastructure\GitamineConfig;
+use Gitamine\Deprecated\Core\Domain\Directory;
+use Gitamine\Deprecated\Core\Domain\Event;
+use Gitamine\Deprecated\Core\Domain\File;
+use Gitamine\Deprecated\Core\Domain\GithubPlugin;
+use Gitamine\Deprecated\Core\Domain\GithubPluginName;
+use Gitamine\Deprecated\Core\Domain\GithubPluginVersion;
+use Gitamine\Deprecated\Core\Domain\Plugin;
+use Gitamine\Deprecated\Core\Domain\PluginOptions;
+use Gitamine\Deprecated\Core\Domain\Verbose;
+use Gitamine\Deprecated\Core\Exception\GithubProjectDoesNotExist;
+use Gitamine\Deprecated\Core\Exception\InvalidDirException;
+use Gitamine\Deprecated\Core\Exception\MissingConfigurationFileException;
+use Gitamine\Deprecated\Core\Infrastructure\GitamineConfig;
 
 /**
  * TODO.

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Prooph\SynchronousQueryBus;
-use Gitamine\Command\InstallPluginCommand as InstallGitaminePluginCommand;
+use App\Prooph\QueryBus;
+use Gitamine\Deprecated\Core\Command\InstallPluginCommand as InstallGitaminePluginCommand;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InstallPluginCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus;
+     * @var QueryBus;
      */
     private $bus;
 

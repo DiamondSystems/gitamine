@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use Gitamine\Command\RunPluginCommand;
-use Gitamine\Exception\InvalidGitamineProjectException;
-use Gitamine\Exception\PluginExecutionFailedException;
-use Gitamine\Query\GetConfiguratedPluginsQuery;
+use Gitamine\Deprecated\Core\Command\RunPluginCommand;
+use Gitamine\Deprecated\Core\Exception\InvalidGitamineProjectException;
+use Gitamine\Deprecated\Core\Exception\PluginExecutionFailedException;
+use Gitamine\Deprecated\Core\Query\GetConfiguratedPluginsQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

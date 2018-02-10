@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Prooph\SynchronousQueryBus;
+use App\Prooph\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UpdatePluginsCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus;
+     * @var QueryBus;
      */
     private $bus;
 

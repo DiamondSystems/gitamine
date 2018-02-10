@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Prooph\SynchronousQueryBusCompilerPass;
+use App\Prooph\BusCompilerPass;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Exception\FileLoaderLoadException;
@@ -93,6 +93,6 @@ class Kernel extends BaseKernel
      */
     protected function build(ContainerBuilder $container): void
     {
-        $container->addCompilerPass(new SynchronousQueryBusCompilerPass());
+        $container->addCompilerPass(new BusCompilerPass());
     }
 }

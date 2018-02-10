@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Git\PostCheckout;
 
 use App\Terminal;
-use Gitamine\Git\Domain\Branch;
-use Gitamine\Git\Domain\File;
-use Gitamine\Git\Domain\FileStatus;
-use Gitamine\Git\Infrastructure\PostCheckout as BasePostCheckout;
+use Gitamine\Git\Common\Domain\Branch;
+use Gitamine\Git\Common\Domain\File;
+use Gitamine\Git\Common\Domain\FileStatus;
+use Gitamine\Git\PostCheckout\Infrastructure\PostCheckout as BasePostCheckout;
 
 /**
  * Class PostCheckout.
@@ -32,15 +32,19 @@ class PostCheckout implements BasePostCheckout
     {
         $command = "git reflog | awk 'NR==1{ print $6 \"\n\" $8; exit }'";
 
-        [$status, $output] = $this->terminal->run($command);
+        $out = $this->terminal->run($command);
 
-        if (0 === $status) {
-            [$source, $destination] = \explode(PHP_EOL, $output);
+        if (count($out) > 2) {
+            [$status, $output] = $out;
 
-            return [
-                new Branch($source),
-                new Branch($destination)
-            ];
+            if (0 === $status) {
+                [$source, $destination] = \explode(PHP_EOL, $output);
+
+                return [
+                    new Branch($source),
+                    new Branch($destination)
+                ];
+            }
         }
 
         return [];

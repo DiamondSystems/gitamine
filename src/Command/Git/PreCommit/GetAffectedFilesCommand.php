@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command\Git\PreCommit;
 
-use App\Prooph\SynchronousQueryBus;
-use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Git\Query\PreCommit\GetAffectedFilesQuery;
+use App\Prooph\QueryBus;
+use Gitamine\Deprecated\Core\Exception\InvalidSubversionDirectoryException;
+use Gitamine\Git\PreCommit\Query\GetAffectedFiles;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class GetAffectedFilesCommand extends ContainerAwareCommand
 {
     /**
-     * @var SynchronousQueryBus;
+     * @var QueryBus;
      */
     private $bus;
 
@@ -53,7 +53,7 @@ final class GetAffectedFilesCommand extends ContainerAwareCommand
 
         try {
             /** @var string[] $files */
-            $files = $this->bus->dispatch(new GetAffectedFilesQuery($status, $filter));
+            $files = $this->bus->dispatch(new GetAffectedFiles($status, $filter));
 
             $output->writeln(\implode($join, $files));
         } catch (InvalidSubversionDirectoryException $e) {

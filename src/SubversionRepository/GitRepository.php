@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\SubversionRepository;
 
-use Gitamine\Domain\Directory;
-use Gitamine\Domain\File;
-use Gitamine\Exception\InvalidSubversionDirectoryException;
-use Gitamine\Infrastructure\SubversionRepository;
+use Gitamine\Deprecated\Core\Domain\Directory;
+use Gitamine\Deprecated\Core\Domain\File;
+use Gitamine\Deprecated\Core\Exception\InvalidSubversionDirectoryException;
+use Gitamine\Deprecated\Core\Infrastructure\SubversionRepository;
 
 /**
  * Class GitRepository.

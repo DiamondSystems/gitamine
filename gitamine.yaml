@@ -1,5 +1,5 @@
 gitamine:
-
+  pre-applypatch: ~
   pre-commit:
     shellcheck: ~
     composer:

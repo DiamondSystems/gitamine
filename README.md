@@ -27,7 +27,7 @@ $ gitamine init
 
 After that you will need to create in your root project folder a gitamine file
 
- 
+
 ```yaml
 # gitamine.yaml
 gitamine:

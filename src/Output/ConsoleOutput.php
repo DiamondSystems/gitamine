@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Output;
 
-use Gitamine\Infrastructure\Output;
+use Gitamine\Deprecated\Core\Infrastructure\Output;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
 
@@ -50,7 +50,7 @@ class ConsoleOutput implements Output
      */
     public function printError(string $message): void
     {
-        $this->output->getErrorOutput()->writeln("${message}");
+        $this->output->getErrorOutput()->writeln($message);
     }
 
     /**
